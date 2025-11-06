@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party'N'Las Vegas - Background Demo</title>
+    
+    <!-- Google Font Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Hero section CSS removed */
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #000; /* Restored original background color */
+            font-family: 'Montserrat', sans-serif; /* Set base font */
+        }
+
+        .call-to-action-box {
+            position: relative; /* Changed from fixed */
+            height: 100vh; /* Full viewport height */
+            width: calc(100vw - 20px); /* Full viewport width minus 10px margin on each side */
+            margin: 10px; /* 10px padding on all edges */
+            background-color: rgba(0, 0, 0, 0.7); /* Transparent darkish */
+            border: 2px dashed rgba(255, 255, 255, 0.5); /* Dashed edges */
+            z-index: 7; /* Above pick-a-package-section */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2em;
+            text-align: center;
+            padding: 20px; /* Padding for the text inside the box */
+            box-sizing: border-box; /* Ensure padding doesn't add to total size */
+        }
+
+        .pick-a-package-section {
+            height: 50vh; /* Reduced height for animation space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 5; /* Below the call-to-action-box */
+        }
+
+        .pick-a-package-text {
+            color: rgb(25, 25, 26);
+            font-weight: 400;
+            font-size: 120px;
+            text-transform: uppercase;
+            line-height: 1.3em;
+            letter-spacing: -4px;
+            font-family: 'Impact', sans-serif; /* Changed to Impact */
+            opacity: 0; /* Initial state for fade-in */
+            position: relative; /* Allow translateY to work */
+        }
+
+        .swipe-cards-container {
+            position: relative;
+            width: 100%;
+            height: 1000px; /* Increased height to accommodate larger cards */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Align to center for vertical centering */
+            margin-top: 100px; /* Moved down */
+            z-index: 7; /* Above pick-a-package-section (6) */
+        }
+
+        .swipe-card-stack {
+            position: relative;
+            width: 600px; /* Increased width (2x original) */
+            height: 800px; /* Increased height (2x original) */
+            /* overflow: hidden; */ /* Removed to prevent clipping of rounded corners */
+        }
+
+        .swipe-card {
+            position: absolute;
+            width: 100%;
+            height: calc(100% * (2/3)); /* Adjust height to maintain aspect ratio 3/2 (width/height) */
+            background-color: #333 !important; /* Dark grey background */
+            border: 2px solid white !important; /* White border */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            cursor: grab;
+            user-select: none;
+            /* Removed flex properties from here, moved to content-wrapper */
+        }
+
+        .swipe-card-content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Align content to the bottom */
+            align-items: center;
+            text-align: center;
+            padding: 8px; /* Equivalent to p-2 */
+            box-sizing: border-box;
+            color: white; /* text-white-1000 */
+            z-index: 2; /* Ensure content is above any background images/overlays */
+        }
+
+        .swipe-card .badge {
+            background-color: #f5f5f5; /* --badge-color-inverted-bg */
+            color: #19191a; /* --badge-color-inverted-fg-emphasis */
+            border-radius: 9999px; /* --badge-border-radius-rounded */
+            font-size: 12px; /* --badge-font-size-xl */
+            padding: 8px 12px; /* --badge-spacing-padding-xl, adjusted for horizontal */
+            font-weight: 600; /* --badge-font-weight */
+            text-transform: uppercase; /* --badge-text-case */
+            letter-spacing: 1px; /* --badge-letter-spacing */
+            margin-bottom: 8px; /* space-y-1 */
+        }
+
+        .swipe-card h3 {
+            position: relative;
+            z-index: 2;
+            color: white; /* White text */
+            font-size: 1.8em;
+            margin: 0;
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            padding-bottom: 4px; /* pb-1, assuming 1 unit is 4px */
+            margin-bottom: 8px; /* space-y-1 */
+        }
+
+        .swipe-card .base-button {
+            background-color: #f5f5f5; /* --button-color-inverted-bg */
+            color: #19191a; /* --button-color-inverted-fg-emphasis */
+            border-radius: 9999px; /* --button-border-radius-rounded */
+            height: 48px; /* --button-sizing-height-xl */
+            padding: 0 17.25px; /* --button-spacing-padding-xl */
+            font-family: "Magic UI Pro", sans-serif; /* --button-typography-label-xl */
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 140%;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 8px; /* space-y-1 */
+        }
+
+        /* Stacking effect for cards behind the active one */
+        .swipe-card:nth-child(2) {
+            transform: translateY(-10px) scale(0.95);
+            z-index: 99;
+        }
+        .swipe-card:nth-child(3) {
+            transform: translateY(-20px) scale(0.9);
+            z-index: 98;
+        }
+        .swipe-card:nth-child(n+4) {
+            opacity: 0;
+            transform: translateY(-30px) scale(0.85);
+            z-index: 97;
+        }
+
+        .swipe-card-dots {
+            width: 100%;
+            text-align: center;
+            margin-top: -310px; /* Moved up by an additional 30px (-280px - 30px) */
+        }
+
+        .swipe-card-dots .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #555;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .swipe-card-dots .dot.active {
+            background-color: #ff69b4;
+        }
+
+        #top-vegas-nightclubs-section {
+            margin-top: -200px; /* Moved down by 100px (-300px + 100px) */
+        }
+
+        #gl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        /* .content styles removed as the element is no longer needed */
+
+        /* --- Redesigned Menu Styles --- */
+        #main-header {
+            position: fixed;
+            top: 20px; /* Positioned from top */
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Center the pill container */
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        #header-pill-container {
+            width: 60%;
+            height: 70px; /* "Finger-width" height */
+            background-color: black;
+            border-radius: 35px; /* Pill shape */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease-in-out; /* Add transition */
+        }
+
+        /* NEW: Style for the pill when menu is open */
+        #header-pill-container.open {
+            background-color: white;
+        }
+
+        #logo {
+            color: white;
+            font-weight: 700;
+            font-size: 22px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease-in-out; /* Add transition */
+        }
+
+        /* NEW: Style for the logo when menu is open */
+        #header-pill-container.open #logo {
+            color: black;
+        }
+
+        #nav-icon {
+            width: 40px;
+            height: 30px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #nav-icon span {
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* NEW: Style for the icon when menu is open */
+        #header-pill-container.open #nav-icon span {
+            background: black;
+        }
+
+        #nav-icon.open span:nth-child(1) {
+            transform: translateY(13px) rotate(45deg);
+        }
+        #nav-icon.open span:nth-child(2) {
+            opacity: 0;
+        }
+        #nav-icon.open span:nth-child(3) {
+            transform: translateY(-13px) rotate(-45deg);
+        }
+
+        #nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            width: 80%;
+            max-width: 1200px;
+            height: 80vh; /* Set height to 80% of viewport */
+            padding-top: 120px; /* Push content below header */
+            
+            /* Solid Black Background */
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 0 0 20px 20px;
+            z-index: 999; /* Sits behind the header pill */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            opacity: 0;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            box-sizing: border-box;
+        }
+        #nav-overlay.open {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        #nav-overlay a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif; /* Use new font */
+            font-size: 32px;
+            font-weight: 700; /* Bold */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+        #nav-overlay a:hover {
+            color: #ff69b4; /* A pinkish highlight on hover */
+        }
+
+        /* --- Carousel Styles --- */
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .card-content {
+            background-color: #333;
+            border-radius: 15px;
+            padding: 60px 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .carousel-dots {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #555;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div id="header-pill-container">
+            <a href="#" id="logo">Party'N'Las Vegas</a>
+            <div id="nav-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="nav-overlay">
+        <a href="#">HOME</a>
+        <a href="#">EVENTS</a>
+        <a href="#">NIGHTCLUBS</a>
+        <a href="#">GENTLEMENS CLUBS</a>
+        <a href="#">PARTY BUS</a>
+        <div style="margin-top: 20px;">
+            <a href="#" style="font-size: 22px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">About Us</a>
+            <span style="color: #ff69b4; font-size: 22px; padding: 0 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">|</span>
+            <a href="#" style="font-size: 22px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">Contact</a>
+            <span style="color: #ff69b4; font-size: 22px; padding: 0 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">|</span>
+            <a href="#" style="font-size: 22px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">Photos</a>
+        </div>
+
+        <div id="card-carousel" class="carousel-container">
+            <div class="carousel-slides">
+                <div class="carousel-slide">
+                    <div class="card-content">
+                        <span class="card-title">Bachelor Party</span>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="card-content">
+                        <span class="card-title">Bachelorette Party</span>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="card-content">
+                        <span class="card-title">Visit Las Vegas Sign</span>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="card-content">
+                        <span class="card-title">Stripper Pole Buses</span>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="card-content">
+                        <span class="card-title">Special Event Transportation</span>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="card-content">
+                        <span class="card-title">Create Your Own Package</span>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </nav>
+
+    <canvas id="gl-canvas"></canvas>
+    <div class="call-to-action-box">
+        <p>Hero Style Video/Call to action</p>
+    </div>
+
+    <div class="pick-a-package-section">
+        <h2 class="pick-a-package-text">Upcoming Events</h2>
+    </div>
+
+
+
+                <div class="swipe-cards-container">
+
+                    <div class="swipe-card-stack">
+
+                        <div class="swipe-card" data-card-id="1">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelor Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="2">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelorette Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="3">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Visit Las Vegas Sign</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="4">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Stripper Pole Buses</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="5">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Special Event Transportation</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="6">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Create Your Own Package</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="swipe-card-dots">
+
+                    <span class="dot active"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                </div>
+
+    <div class="pick-a-package-section">
+        <h2 class="pick-a-package-text">Upcoming Events</h2>
+    </div>
+
+
+
+                <div class="swipe-cards-container">
+
+                    <div class="swipe-card-stack">
+
+                        <div class="swipe-card" data-card-id="1">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelor Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="2">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelorette Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="3">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Visit Las Vegas Sign</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="4">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Stripper Pole Buses</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="5">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Special Event Transportation</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="6">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Create Your Own Package</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="swipe-card-dots">
+
+                    <span class="dot active"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                </div>
+
+    <div class="pick-a-package-section">
+        <h2 class="pick-a-package-text">Upcoming Events</h2>
+    </div>
+
+
+
+                <div class="swipe-cards-container">
+
+                    <div class="swipe-card-stack">
+
+                        <div class="swipe-card" data-card-id="1">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelor Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="2">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelorette Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="3">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Visit Las Vegas Sign</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="4">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Stripper Pole Buses</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="5">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Special Event Transportation</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="6">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Create Your Own Package</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="swipe-card-dots">
+
+                    <span class="dot active"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                </div>
+
+    <div class="pick-a-package-section">
+        <h2 class="pick-a-package-text">Upcoming Events</h2>
+    </div>
+
+
+
+                <div class="swipe-cards-container">
+
+                    <div class="swipe-card-stack">
+
+                        <div class="swipe-card" data-card-id="1">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelor Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="2">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelorette Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="3">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Visit Las Vegas Sign</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="4">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Stripper Pole Buses</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="5">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Special Event Transportation</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="6">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Create Your Own Package</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="swipe-card-dots">
+
+                    <span class="dot active"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                </div>
+
+    <div class="pick-a-package-section">
+        <h2 class="pick-a-package-text">Upcoming Events</h2>
+    </div>
+
+
+
+                <div class="swipe-cards-container">
+
+                    <div class="swipe-card-stack">
+
+                        <div class="swipe-card" data-card-id="1">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelor Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="2">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Bachelorette Party</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="3">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Visit Las Vegas Sign</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="4">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Stripper Pole Buses</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="5">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Special Event Transportation</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swipe-card" data-card-id="6">
+                            <div class="swipe-card-content-wrapper">
+                                <div class="badge">Saturdays</div>
+                                <h3>Create Your Own Package</h3>
+                                <a href="#" class="base-link">
+                                    <button class="base-button">Read More</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="swipe-card-dots">
+
+                    <span class="dot active"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                    <span class="dot"></span>
+
+                </div>
+
+
+
+    <!-- Removed redundant content div -->
+
+
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec2 a_position;
+        void main() {
+            gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec2 u_resolution;
+        uniform float u_time;
+
+        // 2D Random function
+        float random(vec2 st) {
+            return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+        }
+
+        // 2D Noise function
+        float noise(vec2 st) {
+            vec2 i = floor(st);
+            vec2 f = fract(st);
+
+            float a = random(i);
+            float b = random(i + vec2(1.0, 0.0));
+            float c = random(i + vec2(0.0, 1.0));
+            float d = random(i + vec2(1.0, 1.0));
+
+            vec2 u = f * f * (3.0 - 2.0 * f);
+            return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.y * u.x;
+        }
+
+        // Fractal Brownian Motion (less smokey)
+        float fbm(vec2 st) {
+            float value = 0.0;
+            float amplitude = 0.5;
+
+            for (int i = 0; i < 2; i++) { // Reduced octaves for a less "smokey" look
+                value += amplitude * noise(st);
+                st *= 2.0;
+                amplitude *= 0.5;
+            }
+            return value;
+        }
+
+        void main() {
+            vec2 st = gl_FragCoord.xy / u_resolution.xy;
+            st.x *= u_resolution.x / u_resolution.y;
+
+            // --- Noise calculation ---
+            float time = u_time * 0.1; // Slower animation can be achieved by multiplying with a smaller number
+
+            vec2 q = vec2(0.0);
+            q.x = fbm(st + time);
+            q.y = fbm(st + vec2(1.0));
+
+            vec2 r = vec2(0.0);
+            r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.15 * time);
+            r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.126 * time);
+
+            float f = fbm(st + r);
+
+            // --- New Palette (User-defined colors) ---
+            vec3 colorA = vec3(0.929, 1.0, 0.753); // #edffc0 - Light Greenish Yellow
+            vec3 colorB = vec3(1.0, 0.780, 0.973); // #ffc7f8 - Light Pink/Purple
+            vec3 colorC = vec3(0.729, 1.0, 1.0);   // #bafbff - Very Light Blue/Cyan
+            vec3 colorD = vec3(1.0, 1.0, 1.0);     // #ffffff - White
+
+            // --- Color Mixing (User-defined colors) ---
+            vec3 color = mix(colorA, colorB, smoothstep(0.0, 0.2, f)); // Adjust ranges
+            color = mix(color, colorC, smoothstep(0.2, 0.4, f));   // Adjust ranges
+            color = mix(color, colorD, smoothstep(0.4, 1.0, f)); // White becomes prominent from 0.4 to 1.0
+
+            // --- Glossy Glass Effect (Darker) ---
+            vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+            float vignette = smoothstep(0.9, 0.3, length(uv - 0.5)); // Stronger vignette
+            float highlight = smoothstep(0.6, 0.0, length(uv - vec2(0.5, 0.8))); // Larger highlight
+            
+            color *= vignette * 0.7 + 0.3; // Brighter
+            color += highlight * 0.2; // More pronounced highlight
+
+            gl_FragColor = vec4(color, 1.0);
+        }
+    </script>
+
+    <script>
+        // --- WebGL Background Script ---
+        const canvas = document.getElementById('gl-canvas');
+        const gl = canvas.getContext('webgl');
+
+        if (!gl) {
+            console.error("WebGL not supported!");
+            document.body.innerHTML = "WebGL is not supported by your browser.";
+        }
+
+        const vsSource = document.getElementById('vertex-shader').textContent;
+        const fsSource = document.getElementById('fragment-shader').textContent;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+        function createProgram(gl, vs, fs) {
+            const program = gl.createProgram();
+            gl.attachShader(program, vs);
+            gl.attachShader(program, fs);
+            gl.linkProgram(program);
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                console.error('Unable to initialize the shader program: ' + gl.getProgramInfoLog(program));
+                return null;
+            }
+            return program;
+        }
+
+        const shaderProgram = createProgram(gl, vertexShader, fragmentShader);
+
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        const positions = [-1, 1, 1, 1, -1, -1, 1, -1];
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+        const positionAttributeLocation = gl.getAttribLocation(shaderProgram, "a_position");
+        
+        const resolutionUniformLocation = gl.getUniformLocation(shaderProgram, "u_resolution");
+        const timeUniformLocation = gl.getUniformLocation(shaderProgram, "u_time");
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let startTime = Date.now();
+        function render() {
+            const currentTime = (Date.now() - startTime) / 1000;
+
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+
+            gl.useProgram(shaderProgram);
+            
+            gl.enableVertexAttribArray(positionAttributeLocation);
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+            gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+            gl.uniform1f(timeUniformLocation, currentTime);
+
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+        // --- Menu Toggle Script ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const navIcon = document.getElementById('nav-icon');
+            const navOverlay = document.getElementById('nav-overlay');
+            const headerPill = document.getElementById('header-pill-container');
+
+            navIcon.addEventListener('click', () => {
+                navIcon.classList.toggle('open');
+                navOverlay.classList.toggle('open');
+                headerPill.classList.toggle('open');
+            });
+        });
+
+        // --- Scroll Animations for Text Sections ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const textSections = document.querySelectorAll('.pick-a-package-section');
+
+            window.addEventListener('scroll', () => {
+                const viewportHeight = window.innerHeight;
+
+                textSections.forEach(section => {
+                    const text = section.querySelector('.pick-a-package-text');
+                    if (!text) return;
+
+                    const sectionTop = section.getBoundingClientRect().top;
+
+                    // Calculate progress based on the section's position in the viewport.
+                    // Progress is 0 when the section top is at the bottom of the viewport.
+                    // Progress is 1 when the section top is at the top of the viewport.
+                    let progress = 1 - (sectionTop / viewportHeight);
+                    progress = Math.max(0, Math.min(1, progress));
+
+                    // Use Math.sin to create a smooth fade-in and fade-out curve.
+                    const opacity = Math.sin(progress * Math.PI);
+
+                    text.style.opacity = opacity;
+
+                    // Also fade out the section itself to avoid it blocking content behind it.
+                    section.style.opacity = opacity;
+                    section.style.pointerEvents = opacity > 0.1 ? 'auto' : 'none';
+
+                    // Optional: Adjust translateY for a subtle vertical movement effect
+                    const startTranslateY = -viewportHeight * 0.1;
+                    const endTranslateY = viewportHeight * 0.1;
+                    const translateY = startTranslateY + (endTranslateY - startTranslateY) * progress;
+                    text.style.transform = `translateY(${translateY}px)`;
+                });
+            });
+        });
+    </script>
+    <script>
+        // --- Carousel Script ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('card-carousel');
+            if (carousel) {
+                const carouselSlides = carousel.querySelector('.carousel-slides');
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                const dots = carousel.querySelectorAll('.dot');
+                let currentIndex = 0;
+                let startX = 0;
+                let endX = 0;
+
+                function showSlide(index) {
+                    if (index >= slides.length) {
+                        index = 0;
+                    } else if (index < 0) {
+                        index = slides.length - 1;
+                    }
+                    carouselSlides.style.transform = `translateX(-${index * 100}%)`;
+                    currentIndex = index;
+                    updateDots();
+                }
+
+                function updateDots() {
+                    dots.forEach((dot, index) => {
+                        if (index === currentIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        showSlide(index);
+                    });
+                });
+
+                carouselSlides.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                });
+
+                carouselSlides.addEventListener('touchend', (e) => {
+                    endX = e.changedTouches[0].clientX;
+                    if (startX > endX + 50) {
+                        showSlide(currentIndex + 1);
+                    } else if (startX < endX - 50) {
+                        showSlide(currentIndex - 1);
+                    } else {
+                        // Handle tap/click on card if needed
+                    }
+                });
+            }
+        });
+
+        // --- Swipe Cards Script ---
+        function initializeSwipeCards(swipeCardsContainer) {
+            if (swipeCardsContainer) {
+                const swipeCardStack = swipeCardsContainer.querySelector('.swipe-card-stack');
+                let swipeCards = Array.from(swipeCardStack.querySelectorAll('.swipe-card')); // Use let for reassigning
+
+                const swipeCardDots = document.querySelector('.swipe-card-dots'); // Select from document
+                const dots = Array.from(swipeCardDots.querySelectorAll('.dot'));
+
+                let currentIndex = 0; // Track the index of the currently active card (first in the array)
+                let startX, startY;
+                let isDragging = false;
+
+                function updateCardStack() {
+                    swipeCards.forEach((card, index) => {
+                        card.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0.5s, opacity 0.5s';
+                        if (index === 0) { // Active card
+                            card.style.zIndex = 100;
+                            card.style.transform = 'translate3d(0px, 0px, 0px) rotate(0deg) scale3d(1, 1, 1)'; // Centered
+                            card.style.opacity = 1;
+                        } else if (index === 1) { // First card behind
+                            card.style.zIndex = 99;
+                            card.style.transform = 'translate3d(0px, -40px, 0px) scale3d(0.95, 0.95, 1)'; // Aligned behind, slightly up, smaller
+                            card.style.opacity = 1;
+                        } else if (index === 2) { // Second card behind
+                            card.style.zIndex = 98;
+                            card.style.transform = 'translate3d(0px, -80px, 0px) scale3d(0.9, 0.9, 1)'; // Aligned behind, further up, even smaller
+                            card.style.opacity = 1;
+                        } else { // Cards further back (hidden)
+                            card.style.zIndex = 97 - index;
+                            card.style.transform = 'translate3d(0px, -120px, 0px) scale3d(0.85, 0.85, 1)'; // Aligned behind, even further up
+                            card.style.opacity = 0; // Hide them
+                        }
+                        card.style.cursor = 'grab';
+                    });
+                    updateDots();
+                }
+
+                function updateDots() {
+                    dots.forEach((dot, index) => {
+                        if (index === currentIndex) { // Use currentIndex to highlight the correct dot
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+
+                // Event delegation for drag events
+                swipeCardStack.addEventListener('mousedown', handleStart);
+                swipeCardStack.addEventListener('touchstart', handleStart);
+
+                function handleStart(e) {
+                    // Only start dragging if the event originated from the active card
+                    if (e.target.closest('.swipe-card') !== swipeCards[0]) return;
+
+                    isDragging = true;
+                    startX = e.clientX || e.touches[0].clientX;
+                    startY = e.clientY || e.touches[0].clientY;
+                    swipeCards[0].style.transition = 'none'; // Disable transition during drag
+                    swipeCards[0].style.cursor = 'grabbing';
+                }
+
+                window.addEventListener('mousemove', handleMove);
+                window.addEventListener('touchmove', handleMove, { passive: false });
+
+                function handleMove(e) {
+                    if (!isDragging) return;
+
+                    const currentX = e.clientX || e.touches[0].clientX;
+                    const currentY = e.clientY || e.touches[0].clientY; // Get current Y
+
+                    const deltaX = currentX - startX;
+                    const deltaY = currentY - startY; // Calculate deltaY
+
+                    // Prevent default browser scrolling if there's significant vertical movement
+                    if (Math.abs(deltaY) > Math.abs(deltaX)) { // If vertical movement is dominant
+                        e.preventDefault(); // Prevent default scroll
+                    }
+
+                    swipeCards[0].style.transform = `translate3d(${deltaX}px, 0px, 0px) rotate(0deg)`; // Only horizontal movement
+                }
+
+                window.addEventListener('mouseup', handleEnd);
+                window.addEventListener('touchend', handleEnd);
+
+                function handleEnd(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    swipeCards[0].style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out'; // Re-enable transition
+                    swipeCards[0].style.cursor = 'grab';
+
+                    const currentX = e.clientX || e.changedTouches[0].clientX;
+                    const deltaX = currentX - startX;
+
+                    if (Math.abs(deltaX) > swipeCardStack.offsetWidth / 3) { // If dragged far enough
+                        // Throw card off screen
+                        const throwDirection = deltaX > 0 ? window.innerWidth : -window.innerWidth;
+                        const finalRotate = deltaX > 0 ? '5deg' : '-5deg'; // Slight angle turn
+                        swipeCards[0].style.transform = `translate3d(${throwDirection}px, 0px, 0px) rotate(${finalRotate})`; // Only horizontal movement, slight rotation
+                        swipeCards[0].style.opacity = 0;
+
+                        // Move card to the end of the stack
+                        setTimeout(() => {
+                            // Update the array and active card
+                            const swipedCard = swipeCards.shift(); // Remove first card
+                            swipeCards.push(swipedCard); // Add to end
+
+                            currentIndex = (currentIndex + 1) % swipeCards.length; // Update current index for dots
+                            updateCardStack(); // Re-render stack
+                        }, 300); // Match transition duration
+                    } else {
+                        // Snap back
+                        swipeCards[0].style.transform = 'translate3d(0px, 0px, 0px) rotate(0deg)';
+                    }
+                }
+
+                updateCardStack(); // Initial setup
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const swipeContainers = document.querySelectorAll('.swipe-cards-container');
+            swipeContainers.forEach(initializeSwipeCards);
+        });
+    </script>
+</body>
+</html>
