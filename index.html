@@ -8,7 +8,7 @@
     <!-- Google Font Import -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
 
     <style>
         /* Hero section CSS removed */
@@ -17,192 +17,10 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            background-color: #000; /* Restored original background color */
+            background-color: white; /* Changed to white */
             font-family: 'Montserrat', sans-serif; /* Set base font */
         }
 
-        .call-to-action-box {
-            position: relative; /* Changed from fixed */
-            height: 100vh; /* Full viewport height */
-            width: calc(100vw - 20px); /* Full viewport width minus 10px margin on each side */
-            margin: 10px; /* 10px padding on all edges */
-            background-color: rgba(0, 0, 0, 0.7); /* Transparent darkish */
-            border: 2px dashed rgba(255, 255, 255, 0.5); /* Dashed edges */
-            z-index: 7; /* Above pick-a-package-section */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 2em;
-            text-align: center;
-            padding: 20px; /* Padding for the text inside the box */
-            box-sizing: border-box; /* Ensure padding doesn't add to total size */
-        }
-
-        .pick-a-package-section {
-            height: 50vh; /* Reduced height for animation space */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 5; /* Below the call-to-action-box */
-        }
-
-        .pick-a-package-text {
-            color: rgb(25, 25, 26);
-            font-weight: 400;
-            font-size: 120px;
-            text-transform: uppercase;
-            line-height: 1.3em;
-            letter-spacing: -4px;
-            font-family: 'Impact', sans-serif; /* Changed to Impact */
-            opacity: 0; /* Initial state for fade-in */
-            position: relative; /* Allow translateY to work */
-        }
-
-        .swipe-cards-container {
-            position: relative;
-            width: 100%;
-            height: 1000px; /* Increased height to accommodate larger cards */
-            display: flex;
-            justify-content: center;
-            align-items: center; /* Align to center for vertical centering */
-            margin-top: 100px; /* Moved down */
-            z-index: 7; /* Above pick-a-package-section (6) */
-        }
-
-        .swipe-card-stack {
-            position: relative;
-            width: 600px; /* Increased width (2x original) */
-            height: 800px; /* Increased height (2x original) */
-            /* overflow: hidden; */ /* Removed to prevent clipping of rounded corners */
-        }
-
-        .swipe-card {
-            position: absolute;
-            width: 100%;
-            height: calc(100% * (2/3)); /* Adjust height to maintain aspect ratio 3/2 (width/height) */
-            background-color: #333 !important; /* Dark grey background */
-            border: 2px solid white !important; /* White border */
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-            cursor: grab;
-            user-select: none;
-            /* Removed flex properties from here, moved to content-wrapper */
-        }
-
-        .swipe-card-content-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end; /* Align content to the bottom */
-            align-items: center;
-            text-align: center;
-            padding: 8px; /* Equivalent to p-2 */
-            box-sizing: border-box;
-            color: white; /* text-white-1000 */
-            z-index: 2; /* Ensure content is above any background images/overlays */
-        }
-
-        .swipe-card .badge {
-            background-color: #f5f5f5; /* --badge-color-inverted-bg */
-            color: #19191a; /* --badge-color-inverted-fg-emphasis */
-            border-radius: 9999px; /* --badge-border-radius-rounded */
-            font-size: 12px; /* --badge-font-size-xl */
-            padding: 8px 12px; /* --badge-spacing-padding-xl, adjusted for horizontal */
-            font-weight: 600; /* --badge-font-weight */
-            text-transform: uppercase; /* --badge-text-case */
-            letter-spacing: 1px; /* --badge-letter-spacing */
-            margin-bottom: 8px; /* space-y-1 */
-        }
-
-        .swipe-card h3 {
-            position: relative;
-            z-index: 2;
-            color: white; /* White text */
-            font-size: 1.8em;
-            margin: 0;
-            background-color: transparent;
-            padding: 0;
-            border-radius: 0;
-            padding-bottom: 4px; /* pb-1, assuming 1 unit is 4px */
-            margin-bottom: 8px; /* space-y-1 */
-        }
-
-        .swipe-card .base-button {
-            background-color: #f5f5f5; /* --button-color-inverted-bg */
-            color: #19191a; /* --button-color-inverted-fg-emphasis */
-            border-radius: 9999px; /* --button-border-radius-rounded */
-            height: 48px; /* --button-sizing-height-xl */
-            padding: 0 17.25px; /* --button-spacing-padding-xl */
-            font-family: "Magic UI Pro", sans-serif; /* --button-typography-label-xl */
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 140%;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 8px; /* space-y-1 */
-        }
-
-        /* Stacking effect for cards behind the active one */
-        .swipe-card:nth-child(2) {
-            transform: translateY(-10px) scale(0.95);
-            z-index: 99;
-        }
-        .swipe-card:nth-child(3) {
-            transform: translateY(-20px) scale(0.9);
-            z-index: 98;
-        }
-        .swipe-card:nth-child(n+4) {
-            opacity: 0;
-            transform: translateY(-30px) scale(0.85);
-            z-index: 97;
-        }
-
-        .swipe-card-dots {
-            width: 100%;
-            text-align: center;
-            margin-top: -310px; /* Moved up by an additional 30px (-280px - 30px) */
-        }
-
-        .swipe-card-dots .dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: #555;
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-
-        .swipe-card-dots .dot.active {
-            background-color: #ff69b4;
-        }
-
-        #top-vegas-nightclubs-section {
-            margin-top: -200px; /* Moved down by 100px (-300px + 100px) */
-        }
-
-        #gl-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-        }
         /* .content styles removed as the element is no longer needed */
 
         /* --- Redesigned Menu Styles --- */
@@ -215,6 +33,11 @@
             justify-content: center; /* Center the pill container */
             z-index: 1000;
             box-sizing: border-box;
+            transition: top 0.5s ease-out; /* Smooth slide-in for the menu */
+        }
+
+        #main-header.menu-hidden {
+            top: -100px; /* Hide the menu completely above the viewport */
         }
 
         #header-pill-container {
@@ -236,18 +59,35 @@
         }
 
         #logo {
-            color: white;
+            font-family: 'Russo One', sans-serif; /* Apply Russo One font */
             font-weight: 700;
             font-size: 22px;
             text-decoration: none;
-            text-transform: uppercase;
+            text-transform: uppercase; /* Keep uppercase for consistency */
             letter-spacing: 1px;
             transition: color 0.3s ease-in-out; /* Add transition */
+            display: flex; /* Use flexbox to keep words on a line */
+            align-items: baseline; /* Align text baselines */
+            gap: 5px; /* Space between words */
+        }
+
+        /* NEW: Style for individual words in the logo */
+        #logo .logo-word {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #logo .logo-vegas {
+            color: #ff69b4; /* Pink color for "Vegas" */
         }
 
         /* NEW: Style for the logo when menu is open */
-        #header-pill-container.open #logo {
+        #header-pill-container.open #logo .logo-word {
             color: black;
+        }
+        #header-pill-container.open #logo .logo-vegas {
+            color: black; /* Change pink Vegas to black when menu is open */
         }
 
         #nav-icon {
@@ -326,60 +166,189 @@
             color: #ff69b4; /* A pinkish highlight on hover */
         }
 
-        /* --- Carousel Styles --- */
-        .carousel-container {
+        /* Loading Screen Styles */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            overflow: hidden;
-            position: relative;
-            margin-top: 20px;
-        }
-
-        .carousel-slides {
+            height: 100%;
+            background-color: #000000; /* Deep space black */
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: flex-start; /* Align text block to the left */
+            z-index: 9999; /* Ensure it's on top of everything */
+            overflow: hidden; /* Hide overflowing text during animation */
+            transition: opacity 0.5s ease-out; /* Smooth fade out */
+            padding-left: 1px; /* Push text from the left edge by 1px */
+            padding-bottom: 0; /* Remove padding-bottom */
         }
 
-        .carousel-slide {
-            flex: 0 0 100%;
-            width: 100%;
-            box-sizing: border-box;
-            padding: 0 20px;
-            text-align: center;
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
-        .card-content {
-            background-color: #333;
-            border-radius: 15px;
-            padding: 60px 20px;
+        #loading-text {
+            font-family: 'Russo One', sans-serif; /* Changed font */
+            font-weight: 700;
+            font-size: 16.6vw; /* 2x its previous size */
+            line-height: 0.7; /* Adjust line height for stacked effect - closer together */
+            text-transform: uppercase;
             color: white;
-            font-size: 24px;
+            text-align: left; /* Ensure text within the block is left-aligned */
+            transform: translateY(10vh); /* Push text down from center */
+            /* margin-left removed as padding-left is on parent */
+        }
+
+        #loading-text .word {
+            display: block; /* Each word on its own line */
+            opacity: 0; /* Start hidden */
+            transform: translateX(-100%); /* Start off-screen left */
+            transition: transform 1.0s ease-out, opacity 1.0s ease-out; /* Increased duration */
+            /* Removed margin-bottom */
+        }
+
+        #loading-text .word:not(:first-child) {
+            margin-top: -0.1em; /* Negative margin to pull subsequent words closer */
+        }
+
+        #loading-text.slide-in .word {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        #loading-text.slide-in #word-the { transition-delay: 0.1s; }
+        #loading-text.slide-in #word-vegas { transition-delay: 1.6s; }
+        #loading-text.slide-in #word-spot { transition-delay: 3.1s; }
+
+        #word-vegas {
+            color: #ff69b4; /* Pink color for "Vegas" */
+            position: relative;
+            top: 10px; /* Move Vegas down by 10px */
+        }
+
+        #word-spot {
+            position: relative;
+            top: 10px; /* Move Spot. down by 10px */
+        }
+
+        .period {
+            font-size: 1.2em; /* Period slightly larger than text */
+            /* Removed vertical-align: super; to fix positioning */
+        }
+
+        #word-vegas.vegas-zoom-transition {
+            position: fixed; /* Fix position to viewport */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ff69b4; /* Ensure it's pink */
+            z-index: 9999; /* Bring to front */
+            animation: vegas-zoom-out 1.5s forwards; /* Slow zoom animation */
+            transform-origin: center center; /* Zoom from center */
+        }
+
+        @keyframes vegas-zoom-out {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(100); /* Adjust scale to cover screen */
+                opacity: 1;
+            }
+        }
+
+        #new-pill-loader-container {
+            position: absolute;
+            top: 5vw; /* Top right corner, with some padding */
+            right: 5vw;
+            width: 25vw; /* Adjusted width */
+            height: 5vw; /* Thicker height */
+            border: 2px solid white; /* Reverted to white border */
+            border-radius: 2.5vw; /* Pill shape, adjusted for new height */
+            overflow: hidden; /* Hide overflow for percentage counter */
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+        }
+
+        #new-pill-loader-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #ff69b4; /* Reverted to pink fill */
+            transition: width 3s linear; /* Animation for filling */
+        }
+
+        #new-percentage-counter {
+            position: absolute;
+            color: white; /* Reverted to white text */
+            font-family: 'Russo One', sans-serif; /* Applied Russo One font */
+            font-size: 4vw; /* Adjusted font size */
             font-weight: bold;
+            white-space: nowrap;
+            /* Centered within the pill container */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Ensure it's above the fill */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
         }
 
-        .carousel-dots {
-            text-align: center;
-            margin-top: 15px;
+        /* New: White Slide Overlay Styles */
+        #white-slide-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 10000; /* Ensure it's on top of everything, including loading screen */
+            transform: translateY(100%); /* Start off-screen below */
+            transition: transform 0.8s ease-out; /* Smooth slide-up animation */
         }
 
-        .dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: #555;
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
+        #white-slide-overlay.slide-up {
+            transform: translateY(0); /* Slide up to cover the screen */
         }
 
-        .dot.active {
-            background-color: #ff69b4;
+        #white-slide-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-out; /* Optional: fade out the white screen */
         }
+
+
     </style>
 </head>
 <body>
-    <header id="main-header">
+    <div id="loading-screen">
+        <div id="loading-text">
+            <span class="word" id="word-the">THE</span>
+            <span class="word" id="word-vegas">VEGAS</span>
+            <span class="word" id="word-spot">SPOT<span class="period">.</span></span>
+        </div>
+        <div id="new-pill-loader-container">
+            <div id="new-pill-loader-fill"></div>
+            <span id="new-percentage-counter">0%</span>
+        </div>
+    </div>
+
+    <div id="white-slide-overlay"></div>
+
+    <header id="main-header" class="menu-hidden">
         <div id="header-pill-container">
-            <a href="#" id="logo">Party'N'Las Vegas</a>
+            <a href="#" id="logo">
+                <span class="logo-word">THE</span>
+                <span class="logo-word logo-vegas">VEGAS</span>
+                <span class="logo-word">SPOT</span>
+            </a>
             <div id="nav-icon">
                 <span></span>
                 <span></span>
@@ -393,7 +362,6 @@
         <a href="#">EVENTS</a>
         <a href="#">NIGHTCLUBS</a>
         <a href="#">GENTLEMENS CLUBS</a>
-        <a href="#">PARTY BUS</a>
         <div style="margin-top: 20px;">
             <a href="#" style="font-size: 22px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">About Us</a>
             <span style="color: #ff69b4; font-size: 22px; padding: 0 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">|</span>
@@ -401,678 +369,61 @@
             <span style="color: #ff69b4; font-size: 22px; padding: 0 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">|</span>
             <a href="#" style="font-size: 22px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">Photos</a>
         </div>
-
-        <div id="card-carousel" class="carousel-container">
-            <div class="carousel-slides">
-                <div class="carousel-slide">
-                    <div class="card-content">
-                        <span class="card-title">Bachelor Party</span>
-                    </div>
-                </div>
-                <div class="carousel-slide">
-                    <div class="card-content">
-                        <span class="card-title">Bachelorette Party</span>
-                    </div>
-                </div>
-                <div class="carousel-slide">
-                    <div class="card-content">
-                        <span class="card-title">Visit Las Vegas Sign</span>
-                    </div>
-                </div>
-                <div class="carousel-slide">
-                    <div class="card-content">
-                        <span class="card-title">Stripper Pole Buses</span>
-                    </div>
-                </div>
-                <div class="carousel-slide">
-                    <div class="card-content">
-                        <span class="card-title">Special Event Transportation</span>
-                    </div>
-                </div>
-                <div class="carousel-slide">
-                    <div class="card-content">
-                        <span class="card-title">Create Your Own Package</span>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
     </nav>
-
-    <canvas id="gl-canvas"></canvas>
-    <div class="call-to-action-box">
-        <p>Hero Style Video/Call to action</p>
-    </div>
-
-    <div class="pick-a-package-section">
-        <h2 class="pick-a-package-text">Upcoming Events</h2>
-    </div>
-
-
-
-                <div class="swipe-cards-container">
-
-                    <div class="swipe-card-stack">
-
-                        <div class="swipe-card" data-card-id="1">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelor Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="2">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelorette Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="3">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Visit Las Vegas Sign</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="4">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Stripper Pole Buses</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="5">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Special Event Transportation</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="6">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Create Your Own Package</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="swipe-card-dots">
-
-                    <span class="dot active"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                </div>
-
-    <div class="pick-a-package-section">
-        <h2 class="pick-a-package-text">Upcoming Events</h2>
-    </div>
-
-
-
-                <div class="swipe-cards-container">
-
-                    <div class="swipe-card-stack">
-
-                        <div class="swipe-card" data-card-id="1">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelor Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="2">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelorette Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="3">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Visit Las Vegas Sign</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="4">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Stripper Pole Buses</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="5">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Special Event Transportation</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="6">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Create Your Own Package</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="swipe-card-dots">
-
-                    <span class="dot active"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                </div>
-
-    <div class="pick-a-package-section">
-        <h2 class="pick-a-package-text">Upcoming Events</h2>
-    </div>
-
-
-
-                <div class="swipe-cards-container">
-
-                    <div class="swipe-card-stack">
-
-                        <div class="swipe-card" data-card-id="1">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelor Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="2">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelorette Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="3">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Visit Las Vegas Sign</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="4">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Stripper Pole Buses</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="5">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Special Event Transportation</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="6">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Create Your Own Package</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="swipe-card-dots">
-
-                    <span class="dot active"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                </div>
-
-    <div class="pick-a-package-section">
-        <h2 class="pick-a-package-text">Upcoming Events</h2>
-    </div>
-
-
-
-                <div class="swipe-cards-container">
-
-                    <div class="swipe-card-stack">
-
-                        <div class="swipe-card" data-card-id="1">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelor Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="2">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelorette Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="3">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Visit Las Vegas Sign</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="4">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Stripper Pole Buses</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="5">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Special Event Transportation</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="6">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Create Your Own Package</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="swipe-card-dots">
-
-                    <span class="dot active"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                </div>
-
-    <div class="pick-a-package-section">
-        <h2 class="pick-a-package-text">Upcoming Events</h2>
-    </div>
-
-
-
-                <div class="swipe-cards-container">
-
-                    <div class="swipe-card-stack">
-
-                        <div class="swipe-card" data-card-id="1">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelor Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="2">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Bachelorette Party</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="3">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Visit Las Vegas Sign</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="4">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Stripper Pole Buses</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="5">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Special Event Transportation</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swipe-card" data-card-id="6">
-                            <div class="swipe-card-content-wrapper">
-                                <div class="badge">Saturdays</div>
-                                <h3>Create Your Own Package</h3>
-                                <a href="#" class="base-link">
-                                    <button class="base-button">Read More</button>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="swipe-card-dots">
-
-                    <span class="dot active"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                    <span class="dot"></span>
-
-                </div>
-
-
-
-    <!-- Removed redundant content div -->
-
-
-
-    <script id="vertex-shader" type="x-shader/x-vertex">
-        attribute vec2 a_position;
-        void main() {
-            gl_Position = vec4(a_position, 0.0, 1.0);
-        }
-    </script>
-
-    <script id="fragment-shader" type="x-shader/x-fragment">
-        precision mediump float;
-        uniform vec2 u_resolution;
-        uniform float u_time;
-
-        // 2D Random function
-        float random(vec2 st) {
-            return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-        }
-
-        // 2D Noise function
-        float noise(vec2 st) {
-            vec2 i = floor(st);
-            vec2 f = fract(st);
-
-            float a = random(i);
-            float b = random(i + vec2(1.0, 0.0));
-            float c = random(i + vec2(0.0, 1.0));
-            float d = random(i + vec2(1.0, 1.0));
-
-            vec2 u = f * f * (3.0 - 2.0 * f);
-            return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.y * u.x;
-        }
-
-        // Fractal Brownian Motion (less smokey)
-        float fbm(vec2 st) {
-            float value = 0.0;
-            float amplitude = 0.5;
-
-            for (int i = 0; i < 2; i++) { // Reduced octaves for a less "smokey" look
-                value += amplitude * noise(st);
-                st *= 2.0;
-                amplitude *= 0.5;
-            }
-            return value;
-        }
-
-        void main() {
-            vec2 st = gl_FragCoord.xy / u_resolution.xy;
-            st.x *= u_resolution.x / u_resolution.y;
-
-            // --- Noise calculation ---
-            float time = u_time * 0.1; // Slower animation can be achieved by multiplying with a smaller number
-
-            vec2 q = vec2(0.0);
-            q.x = fbm(st + time);
-            q.y = fbm(st + vec2(1.0));
-
-            vec2 r = vec2(0.0);
-            r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.15 * time);
-            r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.126 * time);
-
-            float f = fbm(st + r);
-
-            // --- New Palette (User-defined colors) ---
-            vec3 colorA = vec3(0.929, 1.0, 0.753); // #edffc0 - Light Greenish Yellow
-            vec3 colorB = vec3(1.0, 0.780, 0.973); // #ffc7f8 - Light Pink/Purple
-            vec3 colorC = vec3(0.729, 1.0, 1.0);   // #bafbff - Very Light Blue/Cyan
-            vec3 colorD = vec3(1.0, 1.0, 1.0);     // #ffffff - White
-
-            // --- Color Mixing (User-defined colors) ---
-            vec3 color = mix(colorA, colorB, smoothstep(0.0, 0.2, f)); // Adjust ranges
-            color = mix(color, colorC, smoothstep(0.2, 0.4, f));   // Adjust ranges
-            color = mix(color, colorD, smoothstep(0.4, 1.0, f)); // White becomes prominent from 0.4 to 1.0
-
-            // --- Glossy Glass Effect (Darker) ---
-            vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-            float vignette = smoothstep(0.9, 0.3, length(uv - 0.5)); // Stronger vignette
-            float highlight = smoothstep(0.6, 0.0, length(uv - vec2(0.5, 0.8))); // Larger highlight
-            
-            color *= vignette * 0.7 + 0.3; // Brighter
-            color += highlight * 0.2; // More pronounced highlight
-
-            gl_FragColor = vec4(color, 1.0);
-        }
-    </script>
-
     <script>
-        // --- WebGL Background Script ---
-        const canvas = document.getElementById('gl-canvas');
-        const gl = canvas.getContext('webgl');
+        // --- Loading Screen Script ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingText = document.getElementById('loading-text');
+            const mainHeader = document.getElementById('main-header'); // Get reference to main-header
+            const whiteSlideOverlay = document.getElementById('white-slide-overlay'); // Get reference to the white slide overlay
 
-        if (!gl) {
-            console.error("WebGL not supported!");
-            document.body.innerHTML = "WebGL is not supported by your browser.";
-        }
+            // Removed unused pillLoaderFill and percentageCounter declarations
 
-        const vsSource = document.getElementById('vertex-shader').textContent;
-        const fsSource = document.getElementById('fragment-shader').textContent;
+            // Start text animation
+            setTimeout(() => {
+                loadingText.classList.add('slide-in');
+            }, 100); // Small delay to ensure CSS transition applies
 
-        function createShader(gl, type, source) {
-            const shader = gl.createShader(type);
-            gl.shaderSource(shader, source);
-            gl.compileShader(shader);
-            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                console.error('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
-                gl.deleteShader(shader);
-                return null;
-            }
-            return shader;
-        }
+            // Progress bar and percentage counter
+            let progress = 0;
+            const progressDuration = 4100; // 100% when text finishes
+            const intervalTime = 30; // Update every 30ms
+            const totalSteps = progressDuration / intervalTime;
+            const increment = 100 / totalSteps;
 
-        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
-        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+            const newPillLoaderFill = document.getElementById('new-pill-loader-fill');
+            const newPercentageCounter = document.getElementById('new-percentage-counter');
 
-        function createProgram(gl, vs, fs) {
-            const program = gl.createProgram();
-            gl.attachShader(program, vs);
-            gl.attachShader(program, fs);
-            gl.linkProgram(program);
-            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-                console.error('Unable to initialize the shader program: ' + gl.getProgramInfoLog(program));
-                return null;
-            }
-            return program;
-        }
+            const progressInterval = setInterval(() => {
+                progress += increment;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(progressInterval);
+                }
+                newPillLoaderFill.style.width = progress + '%';
+                newPercentageCounter.textContent = Math.floor(progress) + '%';
 
-        const shaderProgram = createProgram(gl, vertexShader, fragmentShader);
+                if (progress === 100) {
+                    // Ensure it visually reaches 100%
+                    newPillLoaderFill.style.width = '100%';
+                    newPercentageCounter.textContent = '100%';
+                }
+            }, intervalTime);
 
-        const positionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        const positions = [-1, 1, 1, 1, -1, -1, 1, -1];
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+            // Trigger white slide overlay to slide up after text slide-in completes, with an additional delay
+            setTimeout(() => {
+                whiteSlideOverlay.classList.add('slide-up');
+            }, 4100 + 1000); // Text animation finishes around 4.1s, add 1000ms delay = 5.1s
 
-        const positionAttributeLocation = gl.getAttribLocation(shaderProgram, "a_position");
-        
-        const resolutionUniformLocation = gl.getUniformLocation(shaderProgram, "u_resolution");
-        const timeUniformLocation = gl.getUniformLocation(shaderProgram, "u_time");
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            gl.viewport(0, 0, canvas.width, canvas.height);
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        let startTime = Date.now();
-        function render() {
-            const currentTime = (Date.now() - startTime) / 1000;
-
-            gl.clearColor(0.0, 0.0, 0.0, 1.0);
-            gl.clear(gl.COLOR_BUFFER_BIT);
-
-            gl.useProgram(shaderProgram);
-            
-            gl.enableVertexAttribArray(positionAttributeLocation);
-            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-            gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-
-            gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-            gl.uniform1f(timeUniformLocation, currentTime);
-
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-            requestAnimationFrame(render);
-        }
-
-        render();
+            // Hide loading screen and slide in menu after white overlay animation completes
+            setTimeout(() => {
+                loadingScreen.style.display = 'none'; // Immediately remove loading screen from rendering flow
+                loadingScreen.style.pointerEvents = 'none'; // Disable interactions
+                whiteSlideOverlay.classList.add('hidden'); // Hide the white slide overlay
+                mainHeader.classList.remove('menu-hidden'); // Slide in the menu
+            }, 4100 + 1000 + 800); // 5.1s (overlay start) + 0.8s (animation) = 5.9s
+        });
 
         // --- Menu Toggle Script ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -1086,224 +437,7 @@
                 headerPill.classList.toggle('open');
             });
         });
-
-        // --- Scroll Animations for Text Sections ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const textSections = document.querySelectorAll('.pick-a-package-section');
-
-            window.addEventListener('scroll', () => {
-                const viewportHeight = window.innerHeight;
-
-                textSections.forEach(section => {
-                    const text = section.querySelector('.pick-a-package-text');
-                    if (!text) return;
-
-                    const sectionTop = section.getBoundingClientRect().top;
-
-                    // Calculate progress based on the section's position in the viewport.
-                    // Progress is 0 when the section top is at the bottom of the viewport.
-                    // Progress is 1 when the section top is at the top of the viewport.
-                    let progress = 1 - (sectionTop / viewportHeight);
-                    progress = Math.max(0, Math.min(1, progress));
-
-                    // Use Math.sin to create a smooth fade-in and fade-out curve.
-                    const opacity = Math.sin(progress * Math.PI);
-
-                    text.style.opacity = opacity;
-
-                    // Also fade out the section itself to avoid it blocking content behind it.
-                    section.style.opacity = opacity;
-                    section.style.pointerEvents = opacity > 0.1 ? 'auto' : 'none';
-
-                    // Optional: Adjust translateY for a subtle vertical movement effect
-                    const startTranslateY = -viewportHeight * 0.1;
-                    const endTranslateY = viewportHeight * 0.1;
-                    const translateY = startTranslateY + (endTranslateY - startTranslateY) * progress;
-                    text.style.transform = `translateY(${translateY}px)`;
-                });
-            });
-        });
-    </script>
-    <script>
-        // --- Carousel Script ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const carousel = document.getElementById('card-carousel');
-            if (carousel) {
-                const carouselSlides = carousel.querySelector('.carousel-slides');
-                const slides = carousel.querySelectorAll('.carousel-slide');
-                const dots = carousel.querySelectorAll('.dot');
-                let currentIndex = 0;
-                let startX = 0;
-                let endX = 0;
-
-                function showSlide(index) {
-                    if (index >= slides.length) {
-                        index = 0;
-                    } else if (index < 0) {
-                        index = slides.length - 1;
-                    }
-                    carouselSlides.style.transform = `translateX(-${index * 100}%)`;
-                    currentIndex = index;
-                    updateDots();
-                }
-
-                function updateDots() {
-                    dots.forEach((dot, index) => {
-                        if (index === currentIndex) {
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                }
-
-                dots.forEach((dot, index) => {
-                    dot.addEventListener('click', () => {
-                        showSlide(index);
-                    });
-                });
-
-                carouselSlides.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                });
-
-                carouselSlides.addEventListener('touchend', (e) => {
-                    endX = e.changedTouches[0].clientX;
-                    if (startX > endX + 50) {
-                        showSlide(currentIndex + 1);
-                    } else if (startX < endX - 50) {
-                        showSlide(currentIndex - 1);
-                    } else {
-                        // Handle tap/click on card if needed
-                    }
-                });
-            }
-        });
-
-        // --- Swipe Cards Script ---
-        function initializeSwipeCards(swipeCardsContainer) {
-            if (swipeCardsContainer) {
-                const swipeCardStack = swipeCardsContainer.querySelector('.swipe-card-stack');
-                let swipeCards = Array.from(swipeCardStack.querySelectorAll('.swipe-card')); // Use let for reassigning
-
-                const swipeCardDots = document.querySelector('.swipe-card-dots'); // Select from document
-                const dots = Array.from(swipeCardDots.querySelectorAll('.dot'));
-
-                let currentIndex = 0; // Track the index of the currently active card (first in the array)
-                let startX, startY;
-                let isDragging = false;
-
-                function updateCardStack() {
-                    swipeCards.forEach((card, index) => {
-                        card.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0.5s, opacity 0.5s';
-                        if (index === 0) { // Active card
-                            card.style.zIndex = 100;
-                            card.style.transform = 'translate3d(0px, 0px, 0px) rotate(0deg) scale3d(1, 1, 1)'; // Centered
-                            card.style.opacity = 1;
-                        } else if (index === 1) { // First card behind
-                            card.style.zIndex = 99;
-                            card.style.transform = 'translate3d(0px, -40px, 0px) scale3d(0.95, 0.95, 1)'; // Aligned behind, slightly up, smaller
-                            card.style.opacity = 1;
-                        } else if (index === 2) { // Second card behind
-                            card.style.zIndex = 98;
-                            card.style.transform = 'translate3d(0px, -80px, 0px) scale3d(0.9, 0.9, 1)'; // Aligned behind, further up, even smaller
-                            card.style.opacity = 1;
-                        } else { // Cards further back (hidden)
-                            card.style.zIndex = 97 - index;
-                            card.style.transform = 'translate3d(0px, -120px, 0px) scale3d(0.85, 0.85, 1)'; // Aligned behind, even further up
-                            card.style.opacity = 0; // Hide them
-                        }
-                        card.style.cursor = 'grab';
-                    });
-                    updateDots();
-                }
-
-                function updateDots() {
-                    dots.forEach((dot, index) => {
-                        if (index === currentIndex) { // Use currentIndex to highlight the correct dot
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                }
-
-                // Event delegation for drag events
-                swipeCardStack.addEventListener('mousedown', handleStart);
-                swipeCardStack.addEventListener('touchstart', handleStart);
-
-                function handleStart(e) {
-                    // Only start dragging if the event originated from the active card
-                    if (e.target.closest('.swipe-card') !== swipeCards[0]) return;
-
-                    isDragging = true;
-                    startX = e.clientX || e.touches[0].clientX;
-                    startY = e.clientY || e.touches[0].clientY;
-                    swipeCards[0].style.transition = 'none'; // Disable transition during drag
-                    swipeCards[0].style.cursor = 'grabbing';
-                }
-
-                window.addEventListener('mousemove', handleMove);
-                window.addEventListener('touchmove', handleMove, { passive: false });
-
-                function handleMove(e) {
-                    if (!isDragging) return;
-
-                    const currentX = e.clientX || e.touches[0].clientX;
-                    const currentY = e.clientY || e.touches[0].clientY; // Get current Y
-
-                    const deltaX = currentX - startX;
-                    const deltaY = currentY - startY; // Calculate deltaY
-
-                    // Prevent default browser scrolling if there's significant vertical movement
-                    if (Math.abs(deltaY) > Math.abs(deltaX)) { // If vertical movement is dominant
-                        e.preventDefault(); // Prevent default scroll
-                    }
-
-                    swipeCards[0].style.transform = `translate3d(${deltaX}px, 0px, 0px) rotate(0deg)`; // Only horizontal movement
-                }
-
-                window.addEventListener('mouseup', handleEnd);
-                window.addEventListener('touchend', handleEnd);
-
-                function handleEnd(e) {
-                    if (!isDragging) return;
-                    isDragging = false;
-                    swipeCards[0].style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out'; // Re-enable transition
-                    swipeCards[0].style.cursor = 'grab';
-
-                    const currentX = e.clientX || e.changedTouches[0].clientX;
-                    const deltaX = currentX - startX;
-
-                    if (Math.abs(deltaX) > swipeCardStack.offsetWidth / 3) { // If dragged far enough
-                        // Throw card off screen
-                        const throwDirection = deltaX > 0 ? window.innerWidth : -window.innerWidth;
-                        const finalRotate = deltaX > 0 ? '5deg' : '-5deg'; // Slight angle turn
-                        swipeCards[0].style.transform = `translate3d(${throwDirection}px, 0px, 0px) rotate(${finalRotate})`; // Only horizontal movement, slight rotation
-                        swipeCards[0].style.opacity = 0;
-
-                        // Move card to the end of the stack
-                        setTimeout(() => {
-                            // Update the array and active card
-                            const swipedCard = swipeCards.shift(); // Remove first card
-                            swipeCards.push(swipedCard); // Add to end
-
-                            currentIndex = (currentIndex + 1) % swipeCards.length; // Update current index for dots
-                            updateCardStack(); // Re-render stack
-                        }, 300); // Match transition duration
-                    } else {
-                        // Snap back
-                        swipeCards[0].style.transform = 'translate3d(0px, 0px, 0px) rotate(0deg)';
-                    }
-                }
-
-                updateCardStack(); // Initial setup
-            }
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            const swipeContainers = document.querySelectorAll('.swipe-cards-container');
-            swipeContainers.forEach(initializeSwipeCards);
-        });
     </script>
 </body>
 </html>
+
