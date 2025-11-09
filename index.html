@@ -80,6 +80,7 @@
 
         #logo .logo-vegas {
             color: #ff69b4; /* Pink color for "Vegas" */
+            transition: opacity 0.3s ease-in-out; /* Fade in transition */
         }
 
         /* NEW: Style for the logo when menu is open */
@@ -237,6 +238,18 @@
         .period {
             font-size: 1.2em; /* Period slightly larger than text */
             /* Removed vertical-align: super; to fix positioning */
+        }
+
+        .period {
+            font-size: 1.2em; /* Period slightly larger than text */
+            /* Removed vertical-align: super; to fix positioning */
+        }
+
+        /* NEW: Class to fade out elements */
+        .fade-out-element {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-out;
         }
 
         #word-vegas.vegas-zoom-transition {
