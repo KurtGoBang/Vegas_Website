@@ -337,7 +337,16 @@
             transition: opacity 0.5s ease-out; /* Optional: fade out the white screen */
         }
 
-
+        /* Add responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            #header-pill-container {
+                width: 90%; /* Make the pill wider on small screens */
+                padding: 0 20px; /* Adjust padding */
+            }
+            #nav-icon {
+                display: flex; /* Ensure nav icon is always visible */
+            }
+        }
     </style>
 </head>
 <body>
