@@ -384,6 +384,7 @@
             color: white;
             padding-left: 1px;
             opacity: 0;
+            z-index: 1; /* Ensure text is below card */
         }
 
         .club-name {
@@ -426,6 +427,7 @@
             display: flex;
             flex-direction: column;
             gap: 16px; /* Reduced by 20% from 20px */
+            z-index: 2; /* Ensure card is above text */
         }
 
         #custom-app-card .card-header {
@@ -765,7 +767,7 @@
                 scrollTrigger: {
                     trigger: "#scroll-spacer",
                     start: "top top",
-                    end: "+=1000",
+                    end: "bottom top+=500",
                     scrub: true,
                     onUpdate: self => {
                         const headerPill = document.getElementById("header-pill-container");
@@ -808,25 +810,10 @@
                 ease: "none"
             }, ">") // Start after the previous animation (Peppermint Hippo's move/color) ends
             // Animate the custom app card into view with a slide-in effect
-            // .fromTo("#custom-app-card",
-            //     { xPercent: -100, opacity: 0 }, // Start off-screen to the left, hidden
-            //     { xPercent: -50, opacity: 1, ease: "power1.out" } // Slide to horizontally centered, fully visible
-            // , ">") // Start after the gap creation animation ends
-            
-            // Separate ScrollTrigger for the custom app card
-            gsap.fromTo("#custom-app-card",
+            .fromTo("#custom-app-card",
                 { xPercent: -100, opacity: 0 }, // Start off-screen to the left, hidden
-                {
-                    xPercent: -50, opacity: 1, ease: "power1.out",
-                    scrollTrigger: {
-                        trigger: "#scroll-spacer",
-                        start: "top center", // When the top of the spacer hits the center of the viewport
-                        end: "bottom center", // When the bottom of the spacer hits the center of the viewport
-                        scrub: true,
-                        // markers: true // For debugging
-                    }
-                }
-            );
+                { xPercent: -50, opacity: 1, ease: "power1.out" } // Slide to horizontally centered, fully visible
+            , ">") // Start after the gap creation animation ends
         });
     </script>
 </body>
