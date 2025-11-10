@@ -811,8 +811,8 @@
             }, ">") // Start after the previous animation (Peppermint Hippo's move/color) ends
             // Animate the custom app card into view with a slide-in effect
             .fromTo("#custom-app-card",
-                { xPercent: -100, opacity: 0 }, // Start off-screen to the left, hidden
-                { xPercent: -50, opacity: 1, ease: "power1.out" } // Slide to horizontally centered, fully visible
+                { xPercent: -100, opacity: 1 }, // Start off-screen to the left, fully opaque
+                { xPercent: -50, x: 30, opacity: 1, ease: "power1.out" } // Slide to horizontally centered + 30px, fully visible
             , ">") // Start after the gap creation animation ends
         });
     </script>
