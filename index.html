@@ -812,6 +812,21 @@
             //     { xPercent: -100, opacity: 0 }, // Start off-screen to the left, hidden
             //     { xPercent: -50, opacity: 1, ease: "power1.out" } // Slide to horizontally centered, fully visible
             // , ">") // Start after the gap creation animation ends
+            
+            // Separate ScrollTrigger for the custom app card
+            gsap.fromTo("#custom-app-card",
+                { xPercent: -100, opacity: 0 }, // Start off-screen to the left, hidden
+                {
+                    xPercent: -50, opacity: 1, ease: "power1.out",
+                    scrollTrigger: {
+                        trigger: "#scroll-spacer",
+                        start: "top center", // When the top of the spacer hits the center of the viewport
+                        end: "bottom center", // When the bottom of the spacer hits the center of the viewport
+                        scrub: true,
+                        // markers: true // For debugging
+                    }
+                }
+            );
         });
     </script>
 </body>
