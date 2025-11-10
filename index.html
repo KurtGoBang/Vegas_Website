@@ -338,10 +338,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: white;
-            z-index: 10000;
-            transform: translateY(100%);
-            transition: transform 0.8s ease-out;
+            z-index: 10000; /* Ensure it's on top of everything, including loading screen */
+            transform: translateY(100%); /* Start off-screen below */
+            transition: transform 0.8s ease-out; /* Smooth slide-up animation */
         }
 
         #white-slide-overlay.slide-up {
@@ -354,6 +353,14 @@
             transition: opacity 0.5s ease-out;
         }
 
+        .overlay-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the entire area without distortion */
+            display: block; /* Remove extra space below image */
+            filter: grayscale(100%); /* Apply grayscale filter */
+        }
+
         #black-scroll-layer {
             position: fixed;
             top: 0;
@@ -361,11 +368,12 @@
             width: 100%;
             height: 100%;
             background-color: black;
-            z-index: 10001;
-            transform: translateY(100%);
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
+            z-index: 10001; /* Higher than header and white overlay */
+            transform: translateY(100%); /* Start off-screen at the bottom */
+            display: flex; /* Added for centering content */
+            align-items: center; /* Added for vertical centering */
+            justify-content: flex-start; /* Added for left alignment */
+            box-shadow: inset 0 5px 10px -3px rgba(0, 0, 0, 0.5); /* Subtle shadow at the top edge */
         }
 
         #scroll-text-content {
@@ -414,7 +422,7 @@
             position: absolute; /* Position absolutely within black-scroll-layer */
             top: calc(50% - 80px); /* Center vertically and move up by 80px */
             left: 50%; /* Center horizontally */
-            transform: translateY(-50%); /* Adjust for its own vertical size, let GSAP handle horizontal */
+            transform: translate(-50%, -50%); /* Adjust for its own size */
             display: flex;
             flex-direction: column;
             gap: 16px; /* Reduced by 20% from 20px */
@@ -489,9 +497,18 @@
         }
 
         #custom-app-card .share-icon-pink {
-            color: #ff69b4;
+            color: #ff69b4; /* Brand pink color for share icon */
             font-size: 20px;
             cursor: pointer;
+        }
+
+        .share-icon-svg-style {
+            width: 20px; /* Adjust size as needed */
+            height: 20px; /* Adjust size as needed */
+            stroke: #ff69b4; /* Apply brand pink color for the SVG stroke */
+            fill: none; /* Ensure no fill, just stroke */
+            margin-left: auto; /* Push to the right */
+            margin-right: 15px; /* 15px gap from the edge */
         }
 
         #custom-app-card .card-footer-custom {
@@ -561,7 +578,7 @@
         /* Add responsive adjustments for smaller screens */
         @media (max-width: 768px) {
             #header-pill-container {
-                width: 100%; /* Make the pill full width on small screens */
+                width: 80%; /* Make the pill 80% width on small screens */
                 padding: 0 10px; /* Reduce padding further */
             }
             #logo {
@@ -586,7 +603,9 @@
         </div>
     </div>
 
-    <div id="white-slide-overlay"></div>
+    <div id="white-slide-overlay">
+        <img src="Images/main-page-image.jpg" alt="Main Page Hero Image" class="overlay-image">
+    </div>
 
     <header id="main-header" class="menu-hidden">
         <div id="header-pill-container">
@@ -633,8 +652,7 @@
         <div id="custom-app-card">
             <div class="card-header">
                 <div class="app-icon-container">
-                    <img src="thumbnail.svg" alt="App Icon" class="app-icon-svg">
-                </div>
+                                            <img src="Images/thumbnail.svg" alt="App Icon" class="app-icon-svg">                </div>
                 <div class="app-details">
                     <div class="app-name">
                         <span class="pink-star">★</span> Top Recommended Spot <span class="pink-star">★</span>
@@ -642,8 +660,11 @@
                     <div class="app-subtitle">Most Requested Strip Club</div>
                     <div class="app-actions">
                         <button class="book-now-button">Book Now</button>
-                        <span class="share-icon-pink">⬆</span>
-                    </div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="share-icon-pink share-icon-svg-style">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                <polyline points="16 6 12 2 8 6"></polyline>
+                                <line x1="12" y1="2" x2="12" y2="15"></line>
+                            </svg>                    </div>
                 </div>
             </div>
             <div class="card-footer-custom">
@@ -718,7 +739,6 @@
             setTimeout(() => {
                 loadingScreen.style.display = 'none'; // Immediately remove loading screen from rendering flow
                 loadingScreen.style.pointerEvents = 'none'; // Disable interactions
-                whiteSlideOverlay.classList.add('hidden'); // Hide the white slide overlay
                 mainHeader.classList.remove('menu-hidden'); // Slide in the menu
                 document.body.classList.remove('loading-active'); // Enable scrolling
             }, 4100 + 1000 + 800); // 5.1s (overlay start) + 0.8s (animation) = 5.9s
@@ -750,7 +770,7 @@
                     onUpdate: self => {
                         const headerPill = document.getElementById("header-pill-container");
                         const blackLayerTop = (1 - self.progress) * window.innerHeight;
-                        const headerBottomPosition = 290; // Adjusted to fine-tune trigger even earlier
+                        const headerBottomPosition = window.innerHeight - 100; // Adjusted to trigger inversion when black layer is 100px from bottom
 
                         if (blackLayerTop < headerBottomPosition) { // Condition for inversion
                             headerPill.classList.add("inverted");
