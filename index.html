@@ -382,13 +382,13 @@
 
         #scroll-text-content {
             font-family: 'Russo One', sans-serif;
-            font-size: 5vw; /* Slightly bigger */
+            font-size: 9vw; /* Slightly bigger */
             line-height: 0.7;
             text-transform: uppercase;
             color: white;
             padding-left: 1px; /* Match loading screen offset */
             opacity: 0; /* Start invisible */
-            transform: translateY(calc(10vh - 30px)); /* Move text up by 30px */
+            transform: translateY(calc(10vh - 110px)); /* Move text up by 80px */
         }
 
         .club-name {
@@ -396,8 +396,24 @@
             margin-bottom: 20px; /* Add 20px spacing between words */
         }
 
+        .new-spot-text {
+            font-size: 3vh; /* Adjusted font size, smaller */
+            position: fixed; /* Position relative to the viewport */
+            bottom: 10px; /* 10px from the bottom of the screen */
+            right: 10px; /* 10px from the right of the screen */
+            transform: translateX(100vw); /* Start off-screen to the right */
+            opacity: 0; /* Start invisible */
+            z-index: 10004; /* Ensure it's on top */
+            color: white; /* Explicitly set white color for the text */
+            font-family: 'Russo One', sans-serif; /* Apply brand font */
+        }
+
+        .pink-text {
+            color: #ff69b4; /* Brand pink color */
+        }
+
         #scroll-spacer {
-            height: 500vh; /* Creates the scrollable area for the animation */
+            height: 275vh; /* Creates the scrollable area for the animation */
         }
 
 
@@ -468,6 +484,9 @@
         </div>
     </div>
     <div id="scroll-spacer"></div>
+    <span class="club-name new-spot-text">
+        THE <span class="pink-text">STRIP CLUB</span> SPOTS
+    </span>
 
     <script>
         // --- Loading Screen Script ---
@@ -553,9 +572,9 @@
                     onUpdate: self => {
                         const headerPill = document.getElementById("header-pill-container");
                         const blackLayerTop = (1 - self.progress) * window.innerHeight;
-                        const headerBottomPosition = 90; 
+                        const headerBottomPosition = 290; // Adjusted to fine-tune trigger even earlier
 
-                        if (blackLayerTop < headerBottomPosition) {
+                        if (blackLayerTop < headerBottomPosition) { // Condition for inversion
                             headerPill.classList.add("inverted");
                         } else {
                             headerPill.classList.remove("inverted");
@@ -571,7 +590,12 @@
             .to("#scroll-text-content", {
                 opacity: 1,
                 ease: "none"
-            }, "<5%"); // Start fading in after 5% of the scroll animation
+            }, "<5%") // Start fading in after 5% of the scroll animation
+            .to(".new-spot-text", { // New animation for the added text
+                x: 0, // Animate translateX from 100vw (initial CSS) to 0
+                opacity: 1,
+                ease: "power1.out", // A smoother ease for sliding
+            }, 0.28); // Start this animation when the main timeline is 28% complete
         });
     </script>
 </body>
