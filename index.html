@@ -375,6 +375,25 @@
             background-color: black;
             z-index: 10001; /* Higher than header and white overlay */
             transform: translateY(100%); /* Start off-screen at the bottom */
+            display: flex; /* Added for centering content */
+            align-items: center; /* Added for vertical centering */
+            justify-content: flex-start; /* Added for left alignment */
+        }
+
+        #scroll-text-content {
+            font-family: 'Russo One', sans-serif;
+            font-size: 5vw; /* Slightly bigger */
+            line-height: 0.7;
+            text-transform: uppercase;
+            color: white;
+            padding-left: 1px; /* Match loading screen offset */
+            opacity: 0; /* Start invisible */
+            transform: translateY(calc(10vh - 30px)); /* Move text up by 30px */
+        }
+
+        .club-name {
+            display: block; /* Each word on its own line */
+            margin-bottom: 20px; /* Add 20px spacing between words */
         }
 
         #scroll-spacer {
@@ -438,7 +457,16 @@
         </div>
     </nav>
 
-    <div id="black-scroll-layer"></div>
+    <div id="black-scroll-layer">
+        <div id="scroll-text-content">
+            <span class="club-name">Peppermint Hippo</span>
+            <span class="club-name">Treasures</span>
+            <span class="club-name">Sapphire</span>
+            <span class="club-name">Spearmint Rhino</span>
+            <span class="club-name">Huslter Club</span>
+            <span class="club-name">Crazy Horse 3</span>
+        </div>
+    </div>
     <div id="scroll-spacer"></div>
 
     <script>
@@ -516,43 +544,34 @@
         document.addEventListener('DOMContentLoaded', () => {
             gsap.registerPlugin(ScrollTrigger);
 
-            // Animate the black layer and handle header inversion
-            gsap.to("#black-scroll-layer", {
-                transform: "translateY(0%)",
-                ease: "none",
+            const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: "#scroll-spacer",
                     start: "top top",
                     end: "bottom bottom",
                     scrub: true,
-                    markers: false, // Turn off markers for final version
                     onUpdate: self => {
                         const headerPill = document.getElementById("header-pill-container");
-                        // The black layer's animation is linear with the scroll progress.
-                        // When progress is 0, layer is at 100vh. When progress is 1, layer is at 0.
-                        // We can use progress to determine if the header should be inverted.
-                        // The header's bottom is at 90px.
-                        // The black layer's top is at (1 - self.progress) * window.innerHeight;
-                        // We need to account for the header's height and its top offset.
-                        // The header is 70px tall and 20px from the top, so its bottom edge is at 90px.
-                        // We want to invert when the black layer's top edge crosses this 90px mark.
+                        const blackLayerTop = (1 - self.progress) * window.innerHeight;
                         const headerBottomPosition = 90; 
 
-                        // Calculate the current top position of the black layer in pixels
-                        // self.progress is 0-1, representing the scroll progress through #scroll-spacer
-                        // The black layer moves from 100% (bottom of screen) to 0% (top of screen)
-                        // So, when self.progress is 0, blackLayerY is window.innerHeight (100vh)
-                        // When self.progress is 1, blackLayerY is 0
-                        const blackLayerCurrentY = window.innerHeight * (1 - self.progress);
-
-                        if (blackLayerCurrentY < headerBottomPosition) {
+                        if (blackLayerTop < headerBottomPosition) {
                             headerPill.classList.add("inverted");
                         } else {
                             headerPill.classList.remove("inverted");
                         }
                     }
-                },
+                }
             });
+
+            tl.to("#black-scroll-layer", {
+                transform: "translateY(0%)",
+                ease: "none"
+            })
+            .to("#scroll-text-content", {
+                opacity: 1,
+                ease: "none"
+            }, "<5%"); // Start fading in after 5% of the scroll animation
         });
     </script>
 </body>
