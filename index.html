@@ -77,12 +77,12 @@
             font-weight: 700;
             font-size: 22px;
             text-decoration: none;
-            text-transform: uppercase; /* Keep uppercase for consistency */
+            text-transform: uppercase;
             letter-spacing: 1px;
-            transition: color 0.3s ease-in-out; /* Add transition */
-            display: flex; /* Use flexbox to keep words on a line */
-            align-items: baseline; /* Align text baselines */
-            gap: 5px; /* Space between words */
+            transition: color 0.3s ease-in-out;
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
         }
 
         /* Style for individual words in the logo when menu is open */
@@ -90,7 +90,7 @@
             color: black;
         }
         #header-pill-container.open #logo .logo-vegas {
-            color: #ff69b4; /* Keep it pink */
+            color: #ff69b4;
         }
 
         /* Style for individual words in the logo when inverted by scroll */
@@ -98,7 +98,7 @@
             color: black;
         }
         #header-pill-container.inverted #logo .logo-vegas {
-            color: #ff69b4; /* Keep it pink */
+            color: #ff69b4;
         }
 
         #logo .logo-word {
@@ -109,8 +109,8 @@
         }
 
         #logo .logo-vegas {
-            color: #ff69b4; /* Pink color for "Vegas" */
-            transition: opacity 0.3s ease-in-out; /* Fade in transition */
+            color: #ff69b4;
+            transition: opacity 0.3s ease-in-out;
         }
 
         #nav-icon {
@@ -121,6 +121,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            z-index: 10004;
         }
         #nav-icon span {
             display: block;
@@ -158,15 +159,12 @@
             transform: translateX(-50%) translateY(-100%);
             width: 80%;
             max-width: 1200px;
-            height: 80vh; /* Set height to 80% of viewport */
-            padding-top: 120px; /* Push content below header */
-            
-            /* Solid Black Background */
+            height: 80vh;
+            padding-top: 120px;
             background: #000;
             border: 1px solid rgba(255, 255, 255, 0.1);
-
             border-radius: 0 0 20px 20px;
-            z-index: 10002; /* Sits behind the header, above black-scroll-layer */
+            z-index: 10002;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -182,35 +180,34 @@
         #nav-overlay a {
             color: white;
             text-decoration: none;
-            font-family: 'Montserrat', sans-serif; /* Use new font */
+            font-family: 'Montserrat', sans-serif;
             font-size: 32px;
-            font-weight: 700; /* Bold */
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             padding: 5px 10px;
             transition: color 0.3s;
         }
         #nav-overlay a:hover {
-            color: #ff69b4; /* A pinkish highlight on hover */
+            color: #ff69b4;
         }
 
-        /* Loading Screen Styles */
         #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #000000; /* Deep space black */
+            background-color: #000000;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Center vertically */
-            align-items: flex-start; /* Align text block to the left */
-            z-index: 9999; /* Ensure it's on top of everything */
-            overflow: hidden; /* Hide overflowing text during animation */
-            transition: opacity 0.5s ease-out; /* Smooth fade out */
-            padding-left: 1px; /* Push text from the left edge by 1px */
-            padding-bottom: 0; /* Remove padding-bottom */
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 9999;
+            overflow: hidden;
+            transition: opacity 0.5s ease-out;
+            padding-left: 1px;
+            padding-bottom: 0;
         }
 
         #loading-screen.hidden {
@@ -219,27 +216,25 @@
         }
 
         #loading-text {
-            font-family: 'Russo One', sans-serif; /* Changed font */
+            font-family: 'Russo One', sans-serif;
             font-weight: 700;
-            font-size: 16.6vw; /* 2x its previous size */
-            line-height: 0.7; /* Adjust line height for stacked effect - closer together */
+            font-size: 16.6vw;
+            line-height: 0.7;
             text-transform: uppercase;
             color: white;
-            text-align: left; /* Ensure text within the block is left-aligned */
-            transform: translateY(10vh); /* Push text down from center */
-            /* margin-left removed as padding-left is on parent */
+            text-align: left;
+            transform: translateY(10vh);
         }
 
         #loading-text .word {
-            display: block; /* Each word on its own line */
-            opacity: 0; /* Start hidden */
-            transform: translateX(-100%); /* Start off-screen left */
-            transition: transform 1.0s ease-out, opacity 1.0s ease-out; /* Increased duration */
-            /* Removed margin-bottom */
+            display: block;
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: transform 1.0s ease-out, opacity 1.0s ease-out;
         }
 
         #loading-text .word:not(:first-child) {
-            margin-top: -0.1em; /* Negative margin to pull subsequent words closer */
+            margin-top: -0.1em;
         }
 
         #loading-text.slide-in .word {
@@ -252,27 +247,24 @@
         #loading-text.slide-in #word-spot { transition-delay: 3.1s; }
 
         #word-vegas {
-            color: #ff69b4; /* Pink color for "Vegas" */
+            color: #ff69b4;
             position: relative;
-            top: 10px; /* Move Vegas down by 10px */
+            top: 10px;
         }
 
         #word-spot {
             position: relative;
-            top: 10px; /* Move Spot. down by 10px */
+            top: 10px;
         }
 
         .period {
-            font-size: 1.2em; /* Period slightly larger than text */
-            /* Removed vertical-align: super; to fix positioning */
+            font-size: 1.2em;
         }
 
         .period {
-            font-size: 1.2em; /* Period slightly larger than text */
-            /* Removed vertical-align: super; to fix positioning */
+            font-size: 1.2em;
         }
 
-        /* NEW: Class to fade out elements */
         .fade-out-element {
             opacity: 0;
             pointer-events: none;
@@ -280,7 +272,7 @@
         }
 
         #word-vegas.vegas-zoom-transition {
-            position: fixed; /* Fix position to viewport */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
@@ -288,10 +280,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ff69b4; /* Ensure it's pink */
-            z-index: 9999; /* Bring to front */
-            animation: vegas-zoom-out 1.5s forwards; /* Slow zoom animation */
-            transform-origin: center center; /* Zoom from center */
+            background-color: #ff69b4;
+            z-index: 9999;
+            animation: vegas-zoom-out 1.5s forwards;
+            transform-origin: center center;
         }
 
         @keyframes vegas-zoom-out {
@@ -300,20 +292,20 @@
                 opacity: 1;
             }
             100% {
-                transform: scale(100); /* Adjust scale to cover screen */
+                transform: scale(100);
                 opacity: 1;
             }
         }
 
         #new-pill-loader-container {
             position: absolute;
-            top: 5vw; /* Top right corner, with some padding */
+            top: 5vw;
             right: 5vw;
-            width: 25vw; /* Adjusted width */
-            height: 5vw; /* Thicker height */
-            border: 2px solid white; /* Reverted to white border */
-            border-radius: 2.5vw; /* Pill shape, adjusted for new height */
-            overflow: hidden; /* Hide overflow for percentage counter */
+            width: 25vw;
+            height: 5vw;
+            border: 2px solid white;
+            border-radius: 2.5vw;
+            overflow: hidden;
         }
 
         #new-pill-loader-fill {
@@ -322,27 +314,24 @@
             left: 0;
             height: 100%;
             width: 0%;
-            background-color: #ff69b4; /* Reverted to pink fill */
-            border-radius: 2.5vw; /* Match container radius */
-            /* transition removed to allow JS to control width directly for accurate progress display */
+            background-color: #ff69b4;
+            border-radius: 2.5vw;
         }
 
         #new-percentage-counter {
             position: absolute;
-            color: white; /* Reverted to white text */
-            font-family: 'Russo One', sans-serif; /* Applied Russo One font */
-            font-size: 4vw; /* Adjusted font size */
+            color: white;
+            font-family: 'Russo One', sans-serif;
+            font-size: 4vw;
             font-weight: bold;
             white-space: nowrap;
-            /* Centered within the pill container */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1; /* Ensure it's above the fill */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
-        /* New: White Slide Overlay Styles */
         #white-slide-overlay {
             position: fixed;
             top: 0;
@@ -350,22 +339,21 @@
             width: 100%;
             height: 100%;
             background-color: white;
-            z-index: 10000; /* Ensure it's on top of everything, including loading screen */
-            transform: translateY(100%); /* Start off-screen below */
-            transition: transform 0.8s ease-out; /* Smooth slide-up animation */
+            z-index: 10000;
+            transform: translateY(100%);
+            transition: transform 0.8s ease-out;
         }
 
         #white-slide-overlay.slide-up {
-            transform: translateY(0); /* Slide up to cover the screen */
+            transform: translateY(0);
         }
 
         #white-slide-overlay.hidden {
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease-out; /* Optional: fade out the white screen */
+            transition: opacity 0.5s ease-out;
         }
 
-        /* --- New Scroll Animation Styles --- */
         #black-scroll-layer {
             position: fixed;
             top: 0;
@@ -373,55 +361,211 @@
             width: 100%;
             height: 100%;
             background-color: black;
-            z-index: 10001; /* Higher than header and white overlay */
-            transform: translateY(100%); /* Start off-screen at the bottom */
-            display: flex; /* Added for centering content */
-            align-items: center; /* Added for vertical centering */
-            justify-content: flex-start; /* Added for left alignment */
+            z-index: 10001;
+            transform: translateY(100%);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         #scroll-text-content {
             font-family: 'Russo One', sans-serif;
-            font-size: 9vw; /* Slightly bigger */
+            font-size: 9vw;
             line-height: 0.7;
             text-transform: uppercase;
             color: white;
-            padding-left: 1px; /* Match loading screen offset */
-            opacity: 0; /* Start invisible */
-            transform: translateY(calc(10vh - 110px)); /* Move text up by 80px */
+            padding-left: 1px;
+            opacity: 0;
         }
 
         .club-name {
-            display: block; /* Each word on its own line */
-            margin-bottom: 20px; /* Add 20px spacing between words */
+            display: block;
+            margin-bottom: 20px;
         }
 
         .new-spot-text {
-            font-size: 3vh; /* Adjusted font size, smaller */
-            position: fixed; /* Position relative to the viewport */
-            bottom: 10px; /* 10px from the bottom of the screen */
-            right: 10px; /* 10px from the right of the screen */
-            transform: translateX(100vw); /* Start off-screen to the right */
-            opacity: 0; /* Start invisible */
-            z-index: 10004; /* Ensure it's on top */
-            color: white; /* Explicitly set white color for the text */
-            font-family: 'Russo One', sans-serif; /* Apply brand font */
+            font-size: 3vh;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            transform: translateX(100vw);
+            opacity: 0;
+            z-index: 10004;
+            color: white;
+            font-family: 'Russo One', sans-serif;
         }
 
         .pink-text {
-            color: #ff69b4; /* Brand pink color */
+            color: #ff69b4;
         }
 
         #scroll-spacer {
-            height: 275vh; /* Creates the scrollable area for the animation */
+            height: 275vh;
         }
 
 
+        /* --- Custom App Card Styles --- */
+        #custom-app-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 16px; /* Reduced by 20% from 20px */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 95%; /* Set to 95% of the screen */
+            position: absolute; /* Position absolutely within black-scroll-layer */
+            top: calc(50% - 80px); /* Center vertically and move up by 80px */
+            left: 50%; /* Center horizontally */
+            transform: translateY(-50%); /* Adjust for its own vertical size, let GSAP handle horizontal */
+            display: flex;
+            flex-direction: column;
+            gap: 16px; /* Reduced by 20% from 20px */
+        }
+
+        #custom-app-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #custom-app-card .app-icon-container {
+            width: 70px;
+            height: 70px;
+            background-color: black;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        #custom-app-card .app-icon-svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        #custom-app-card .app-details {
+            flex-grow: 1;
+        }
+
+        #custom-app-card .app-name {
+            font-family: 'Russo One', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: black;
+            margin-bottom: 5px;
+        }
+
+        #custom-app-card .pink-star {
+            color: #ff69b4;
+        }
+
+        #custom-app-card .app-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        #custom-app-card .app-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #custom-app-card .book-now-button {
+            background-color: black;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #custom-app-card .book-now-button:hover {
+            background-color: #333;
+        }
+
+        #custom-app-card .share-icon-pink {
+            color: #ff69b4;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #custom-app-card .card-footer-custom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            gap: 10px;
+        }
+
+        #custom-app-card .rating-section-custom,
+        #custom-app-card .awards-section-custom {
+            text-align: center;
+            flex: 1;
+        }
+
+        #custom-app-card .rating-value-custom {
+            font-family: 'Russo One', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: black;
+        }
+
+        #custom-app-card .rating-text-custom {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        #custom-app-card .stars-custom {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        #custom-app-card .awards-title-custom {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        #custom-app-card .awards-text-custom {
+            font-family: 'Russo One', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: black;
+            margin-top: 2px;
+        }
+
+        #custom-app-card .awards-year-custom {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        #custom-app-card .divider-custom {
+            color: #ff69b4;
+            font-size: 24px;
+            font-weight: 700;
+        }
         /* Add responsive adjustments for smaller screens */
         @media (max-width: 768px) {
             #header-pill-container {
-                width: 90%; /* Make the pill wider on small screens */
-                padding: 0 20px; /* Adjust padding */
+                width: 100%; /* Make the pill full width on small screens */
+                padding: 0 10px; /* Reduce padding further */
+            }
+            #logo {
+                font-size: 18px; /* Reduce font size for logo on mobile */
             }
             #nav-icon {
                 display: flex; /* Ensure nav icon is always visible */
@@ -475,12 +619,46 @@
 
     <div id="black-scroll-layer">
         <div id="scroll-text-content">
-            <span class="club-name">Peppermint Hippo</span>
-            <span class="club-name">Treasures</span>
-            <span class="club-name">Sapphire</span>
-            <span class="club-name">Spearmint Rhino</span>
-            <span class="club-name">Huslter Club</span>
-            <span class="club-name">Crazy Horse 3</span>
+            <span class="club-name" id="club-name-peppermint-hippo">Peppermint Hippo</span>
+            <div id="other-club-names-container">
+                <span class="club-name">Treasures</span>
+                <span class="club-name">Sapphire</span>
+                <span class="club-name">Spearmint Rhino</span>
+                <span class="club-name">Huslter Club</span>
+                <span class="club-name">Crazy Horse 3</span>
+            </div>
+        </div>
+
+        <!-- Customized App Card -->
+        <div id="custom-app-card">
+            <div class="card-header">
+                <div class="app-icon-container">
+                    <img src="thumbnail.svg" alt="App Icon" class="app-icon-svg">
+                </div>
+                <div class="app-details">
+                    <div class="app-name">
+                        <span class="pink-star">★</span> Top Recommended Spot <span class="pink-star">★</span>
+                    </div>
+                    <div class="app-subtitle">Most Requested Strip Club</div>
+                    <div class="app-actions">
+                        <button class="book-now-button">Book Now</button>
+                        <span class="share-icon-pink">⬆</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer-custom">
+                <div class="rating-section-custom">
+                    <div class="rating-value-custom">4.7</div>
+                    <div class="rating-text-custom">Google Rating</div>
+                    <div class="stars-custom">★★★★★</div>
+                </div>
+                <span class="divider-custom">|</span>
+                <div class="awards-section-custom">
+                    <div class="awards-title-custom">AWARDS</div>
+                    <div class="awards-text-custom">Best Strip Club</div>
+                    <div class="awards-year-custom">2024-2025</div>
+                </div>
+            </div>
         </div>
     </div>
     <div id="scroll-spacer"></div>
@@ -567,7 +745,7 @@
                 scrollTrigger: {
                     trigger: "#scroll-spacer",
                     start: "top top",
-                    end: "bottom bottom",
+                    end: "+=1000",
                     scrub: true,
                     onUpdate: self => {
                         const headerPill = document.getElementById("header-pill-container");
@@ -589,13 +767,31 @@
             })
             .to("#scroll-text-content", {
                 opacity: 1,
+                y: -50, // Push up by 50px (moved up 100px from previous 50px)
                 ease: "none"
             }, "<5%") // Start fading in after 5% of the scroll animation
-            .to(".new-spot-text", { // New animation for the added text
-                x: 0, // Animate translateX from 100vw (initial CSS) to 0
+            .to(".new-spot-text", {
+                x: 0,
                 opacity: 1,
-                ease: "power1.out", // A smoother ease for sliding
-            }, 0.28); // Start this animation when the main timeline is 28% complete
+                ease: "power1.out",
+            }, 0.28)
+            // Peppermint Hippo moves up and turns pink
+            .to("#club-name-peppermint-hippo", {
+                color: "#ff69b4",
+                y: -50, // Move up by 50px
+                ease: "none" // Instant color change, and linear movement
+            }, ">") // Start after the previous animation (.new-spot-text) ends
+
+            // Then, the rest of the list moves down
+            .to("#other-club-names-container", {
+                y: 200, // Move down by 200px to create a total 250px gap (50 + 200)
+                ease: "none"
+            }, ">") // Start after the previous animation (Peppermint Hippo's move/color) ends
+            // Animate the custom app card into view with a slide-in effect
+            .fromTo("#custom-app-card",
+                { xPercent: -150, opacity: 0 }, // Start off-screen to the left, hidden
+                { xPercent: -50, opacity: 1, ease: "power1.out" } // Slide to horizontally centered, fully visible
+            , ">") // Start after the gap creation animation ends
         });
     </script>
 </body>
