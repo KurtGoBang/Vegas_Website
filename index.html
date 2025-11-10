@@ -421,9 +421,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 95%; /* Set to 95% of the screen */
             position: absolute; /* Position absolutely within black-scroll-layer */
-            top: calc(50% - 80px); /* Center vertically and move up by 80px */
-            left: 50%; /* Center horizontally */
-            transform: translate(-50%, -50%); /* Adjust for its own size */
+            top: calc(50% - 200px); /* Center vertically and move up by 200px */
             display: flex;
             flex-direction: column;
             gap: 16px; /* Reduced by 20% from 20px */
@@ -767,7 +765,7 @@
                 scrollTrigger: {
                     trigger: "#scroll-spacer",
                     start: "top top",
-                    end: "bottom top+=500",
+                    end: "bottom top+=1500",
                     scrub: true,
                     onUpdate: self => {
                         const headerPill = document.getElementById("header-pill-container");
@@ -811,8 +809,8 @@
             }, ">") // Start after the previous animation (Peppermint Hippo's move/color) ends
             // Animate the custom app card into view with a slide-in effect
             .fromTo("#custom-app-card",
-                { xPercent: -100, opacity: 1 }, // Start off-screen to the left, fully opaque
-                { xPercent: -50, x: 130, opacity: 1, ease: "power1.out" } // Slide to horizontally centered + 130px, fully visible
+                { left: "-120vw", x: 0, opacity: 0 }, // Start completely off-screen to the left, hidden
+                { left: "50%", x: "-50%", opacity: 1, ease: "power1.out" } // Slide to horizontally centered, fully visible
             , ">") // Start after the gap creation animation ends
         });
     </script>
