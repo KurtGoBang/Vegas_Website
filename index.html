@@ -409,7 +409,13 @@
         }
 
         #scroll-spacer {
-            height: 275vh;
+            /* height: 275vh; */ /* Removed as scroll-proxy will handle scroll height */
+        }
+
+        #scroll-proxy {
+            height: 1500vh; /* Very large height to ensure ample scroll */
+            pointer-events: none; /* Make it invisible to mouse events */
+            background-color: transparent; /* Ensure it's invisible */
         }
 
 
@@ -417,14 +423,14 @@
         #custom-app-card {
             background-color: white;
             border-radius: 20px;
-            padding: 16px; /* Reduced by 20% from 20px */
+            padding: 10px; /* Reduced from 16px to decrease height */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 95%; /* Set to 95% of the screen */
             position: absolute; /* Position absolutely within black-scroll-layer */
             top: calc(50% - 200px); /* Center vertically and move up by 200px */
             display: flex;
             flex-direction: column;
-            gap: 16px; /* Reduced by 20% from 20px */
+            gap: 13px; /* Reduced from 16px to decrease height */
             z-index: 2; /* Ensure card is above text */
         }
 
@@ -687,6 +693,7 @@
         </div>
     </div>
     <div id="scroll-spacer"></div>
+    <div id="scroll-proxy"></div>
     <span class="club-name new-spot-text">
         THE <span class="pink-text">STRIP CLUB</span> SPOTS
     </span>
@@ -746,6 +753,11 @@
                 mainHeader.classList.remove('menu-hidden'); // Slide in the menu
                 document.body.classList.remove('loading-active'); // Enable scrolling
             }, 4100 + 1000 + 800); // 5.1s (overlay start) + 0.8s (animation) = 5.9s
+
+            // Force ScrollTrigger to refresh after a short delay to ensure correct calculations
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 6000); // Refresh after all loading animations are likely complete
         });
 
         // --- Menu Toggle Script ---
@@ -767,9 +779,9 @@
 
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: "#scroll-spacer",
+                    trigger: "#scroll-proxy", // Changed trigger to scroll-proxy
                     start: "top top",
-                    end: "bottom top+=1500",
+                    end: "bottom bottom", // Changed end to bottom bottom
                     scrub: true,
                     onUpdate: self => {
                         const headerPill = document.getElementById("header-pill-container");
@@ -787,35 +799,50 @@
 
             tl.to("#black-scroll-layer", {
                 transform: "translateY(0%)",
-                ease: "none"
+                ease: "none",
+                duration: 1000 // Added duration
             })
             .to("#scroll-text-content", {
                 opacity: 1,
                 y: -50, // Push up by 50px (moved up 100px from previous 50px)
-                ease: "none"
+                ease: "none",
+                duration: 1000 // Added duration
             }, "<5%") // Start fading in after 5% of the scroll animation
             .to(".new-spot-text", {
                 x: 0,
                 opacity: 1,
                 ease: "power1.out",
+                duration: 500 // Added duration
             }, 0.28)
             // Peppermint Hippo moves up and turns pink
             .to("#club-name-peppermint-hippo", {
                 color: "#ff69b4",
                 y: -50, // Move up by 50px
-                ease: "none" // Instant color change, and linear movement
+                ease: "none", // Instant color change, and linear movement
+                duration: 1000 // Added duration
             }, ">") // Start after the previous animation (.new-spot-text) ends
 
             // Then, the rest of the list moves down
             .to("#other-club-names-container", {
                 y: 200, // Move down by 200px to create a total 250px gap (50 + 200)
-                ease: "none"
+                ease: "none",
+                duration: 1000 // Added duration
             }, ">") // Start after the previous animation (Peppermint Hippo's move/color) ends
             // Animate the custom app card into view with a slide-in effect
             .fromTo("#custom-app-card",
                 { left: "-120vw", x: 0, opacity: 0 }, // Start completely off-screen to the left, hidden
-                { left: "50%", x: "-50%", opacity: 1, ease: "power1.out" } // Slide to horizontally centered, fully visible
+                { left: "50%", x: "-50%", opacity: 1, ease: "power1.out", duration: 1500 } // Added duration
             , ">") // Start after the gap creation animation ends
+            // Card Hold (75vh equivalent scroll distance)
+            .to("#custom-app-card", { // This tween does nothing to the card, effectively holding it
+                duration: 750, // 750px scroll distance for the hold
+                ease: "none"
+            }, "+=0") // Start immediately after card slides in
+
+            // Card Exit (mimics entry speed)
+            .to("#custom-app-card",
+                { left: "120vw", x: 0, opacity: 0, ease: "power1.out", duration: 650 } // 650px scroll distance for exit
+            , ">") // Start immediately after the hold
         });
     </script>
 </body>
