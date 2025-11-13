@@ -413,7 +413,7 @@
         }
 
         #scroll-proxy {
-            height: 500vh; /* Reduced from 1500vh to make animations quicker */
+            height: 1190vh; /* Adjusted from 940vh to accommodate increased timeline duration */
             pointer-events: none; /* Make it invisible to mouse events */
             background-color: transparent; /* Ensure it's invisible */
         }
@@ -843,6 +843,35 @@
             .to("#custom-app-card",
                 { left: "120vw", x: 0, opacity: 0, ease: "power1.out", duration: 650 } // 650px scroll distance for exit
             , ">") // Start immediately after the hold
+
+            // Peppermint Hippo moves back down
+            .to("#club-name-peppermint-hippo", {
+                y: 0, // Return to original position
+                ease: "none",
+                duration: 1000 // Same duration as initial move up
+            }, ">") // Start after the card exits
+
+            // Other club names move back up
+            .to("#other-club-names-container", {
+                y: 0, // Return to original position
+                ease: "none",
+                duration: 1000 // Same duration as initial move down
+            }, "<") // Start at the same time as Peppermint Hippo's return
+
+            // --- Club Name Highlighting Sequence ---
+            // Get all club name elements
+            const allClubNames = [document.getElementById('club-name-peppermint-hippo'), ...document.querySelectorAll('#other-club-names-container .club-name')];
+
+            // Initial state: Peppermint Hippo is pink, others are white (implicitly)
+            // Transition from Peppermint Hippo to Treasures
+            tl.to(allClubNames[0], { color: "white", duration: 500 }, ">") // Peppermint Hippo turns white
+              .to(allClubNames[1], { color: "#ff69b4", duration: 500 }, "<"); // Treasures turns pink
+
+            // Loop through the rest of the club names
+            for (let i = 1; i < allClubNames.length - 1; i++) {
+                tl.to(allClubNames[i], { color: "white", duration: 500 }, ">") // Previous club name turns white
+                  .to(allClubNames[i + 1], { color: "#ff69b4", duration: 500 }, "<"); // Current club name turns pink
+            }
         });
     </script>
 </body>
