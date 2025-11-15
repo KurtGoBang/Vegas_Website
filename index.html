@@ -18,6 +18,7 @@
     
     <!-- GSAP Animation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
@@ -439,19 +440,22 @@
 
         #animation-clone.peppermint-hippo-expanded .card-title {
             position: absolute;
-            top: 25vh;
-            left: 20px;
+            top: -20px;
+            left: -10px;
             color: white;
             font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-align: left;
+            margin: 0;
+            white-space: nowrap;
         }
 
         #animation-clone.peppermint-hippo-expanded .card-content {
-            color: white;
+            /* Color will be inherited and animated */
         }
 
         .hippo-footer {
-            color: white;
+            /* Color will be inherited and animated */
             text-align: center;
             padding: 20px;
         }
@@ -590,6 +594,7 @@
 
     <script>
         // --- Loading Screen Script ---
+        gsap.registerPlugin(ScrollTrigger);
         document.addEventListener('DOMContentLoaded', () => {
             const loadingScreen = document.getElementById('loading-screen');
             const loadingText = document.getElementById('loading-text');
@@ -650,6 +655,7 @@
 
         // --- Footer Menu & Card Script (Clone Animation) ---
         document.addEventListener('DOMContentLoaded', () => {
+            let scrollTween = null;
             const menuItems = document.querySelectorAll('.glass-item');
             const cardGridContainer = document.getElementById('card-grid-container');
             const animationClone = document.getElementById('animation-clone');
@@ -718,25 +724,6 @@
                 originalCard = card;
                 const cardRect = card.getBoundingClientRect();
 
-                if (card.classList.contains('peppermint-hippo-card')) {
-                    animationClone.classList.add('peppermint-hippo-expanded');
-                    animationClone.innerHTML = `
-                        <div class="card-title">${card.textContent}</div>
-                        <div class="card-content">
-                            <p>Details about ${card.textContent} will go here.</p>
-                            <div style="height: 1000px;"></div>
-                            <footer class="hippo-footer">Peppermint hippo</footer>
-                        </div>
-                    `;
-                } else {
-                    animationClone.innerHTML = `
-                        <div class="card-title">${card.textContent}</div>
-                        <div class="card-content">
-                            <p>Details about ${card.textContent} will go here.</p>
-                        </div>
-                    `;
-                }
-                
                 gsap.set(animationClone, {
                     left: cardRect.left,
                     top: cardRect.top,
@@ -749,6 +736,25 @@
                 originalCard.style.opacity = 0;
                 document.body.classList.add('card-zoomed');
 
+                if (card.classList.contains('peppermint-hippo-card')) {
+                    animationClone.classList.add('peppermint-hippo-expanded');
+                    animationClone.innerHTML = `
+                        <div class="card-title">${card.textContent}</div>
+                        <div class="card-content">
+                            <p>Details about ${card.textContent} will go here.</p>
+                            <div style="height: 3000px;"></div>
+                            <footer class="hippo-footer">Peppermint hippo</footer>
+                        </div>
+                    `;
+                } else {
+                    animationClone.innerHTML = `
+                        <div class="card-title">${card.textContent}</div>
+                        <div class="card-content">
+                            <p>Details about ${card.textContent} will go here.</p>
+                        </div>
+                    `;
+                }
+                
                 gsap.to(animationClone, {
                     duration: 0.5,
                     ease: 'power3.inOut',
@@ -759,9 +765,21 @@
                     borderRadius: 0,
                     onComplete: () => {
                         gsap.set(animationClone, { overflowY: 'auto' });
+
+                        scrollTween = ScrollTrigger.create({
+                            trigger: "#animation-clone",
+                            scroller: "#animation-clone",
+                            start: "75%",
+                            end: "100%",
+                            scrub: true,
+                            animation: gsap.to("#animation-clone", { 
+                                backgroundColor: "white",
+                                color: "black",
+                                immediateRender: false 
+                            })
+                        });
                     }
                 });
-
                 gsap.to('#animation-clone .card-content', {
                     duration: 0.3,
                     opacity: 1,
@@ -772,6 +790,10 @@
             }
 
             function zoomOut() {
+                if (scrollTween) {
+                    scrollTween.kill();
+                    scrollTween = null;
+                }
                 if (!originalCard) return;
                 const cardRect = originalCard.getBoundingClientRect();
 
