@@ -21,12 +21,7 @@
 
     <style>
         :root {
-            --brand-pink: #ff69b4;
-            --lg-bg-color: rgba(255, 255, 255, 0.25);
-            --lg-highlight: rgba(255, 255, 255, 0.75);
-            --lg-text: #ffffff;
-            --lg-red: var(--brand-pink); /* Use theme pink instead of red */
-            --lg-grey: #444739;
+
         }
 
         body {
@@ -48,7 +43,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            z-index: 10003;
+            z-index: 10007;
             box-sizing: border-box;
             transition: top 0.5s ease-out;
         }
@@ -89,7 +84,10 @@
             color: white;
         }
         #header-pill-container.open #logo .logo-vegas {
-            color: var(--brand-pink);
+            background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         #logo .logo-word {
@@ -100,7 +98,10 @@
         }
 
         #logo .logo-vegas {
-            color: var(--brand-pink);
+            background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             transition: opacity 0.3s ease-in-out;
         }
 
@@ -145,7 +146,7 @@
             width: 100%;
             height: 100%;
             background: #000;
-            z-index: 10002;
+            z-index: 10006;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -171,7 +172,10 @@
             transition: color 0.3s;
         }
         #nav-overlay a:hover {
-            color: var(--brand-pink);
+            background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         #loading-screen {
@@ -218,7 +222,15 @@
         #loading-text.slide-in #word-spot { transition-delay: 3.1s; }
 
         #word-vegas {
-            color: var(--brand-pink);
+            font-weight: 700;
+            text-transform: uppercase;
+            background: linear-gradient(90deg,
+                #FF0EBE 0%,   /* vibrant pink */
+                #8A00FF 100%  /* vibrant purple */
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         #new-pill-loader-container {
@@ -235,7 +247,10 @@
         #new-pill-loader-fill {
             height: 100%;
             width: 0%;
-            background-color: var(--brand-pink);
+            background: linear-gradient(90deg,
+                #FF0EBE 0%,   /* vibrant pink */
+                #8A00FF 100%  /* vibrant purple */
+            );
             border-radius: 2.5vw;
         }
 
@@ -273,6 +288,13 @@
             object-fit: cover;
             display: block;
             filter: grayscale(100%);
+            transition: filter 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: scale(1);
+        }
+
+        #white-slide-overlay.dimmed .overlay-image {
+            filter: grayscale(100%) brightness(0.5) blur(5px);
+            transform: scale(1.1);
         }
 
         /* --- Glassmorphism Menu Styles --- */
@@ -338,7 +360,7 @@
 
         .glass-item--active,
         .glass-item--active:hover {
-            background: var(--brand-pink);
+            background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%);
             color: white;
             border-radius: 0.75rem;
         }
@@ -371,7 +393,6 @@
             border-radius: 16px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
             cursor: pointer;
-            color: var(--brand-pink);
             font-family: 'Russo One', sans-serif;
             min-height: 100px;
             display: flex;
@@ -381,6 +402,59 @@
             transition: opacity 0.2s;
             padding: 0 20px; /* Add padding */
         }
+
+        .card-text {
+            color: black;
+        }
+
+        .peppermint-hippo-card {
+            background-image: url('Images/Hippo-Inside.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .peppermint-hippo-card .card-text {
+            color: white;
+        }
+
+        #animation-clone.peppermint-hippo-expanded {
+            background: white;
+            padding-top: 40vh;
+        }
+
+        #animation-clone.peppermint-hippo-expanded::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40vh;
+            background-image: url('Images/Hippo-Inside.jpg');
+            background-size: cover;
+            background-position: center;
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+
+        #animation-clone.peppermint-hippo-expanded .card-title {
+            position: absolute;
+            top: 25vh;
+            left: 20px;
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #animation-clone.peppermint-hippo-expanded .card-content {
+            color: black;
+        }
+
+        .hippo-footer {
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+
 
         .card:hover {
             box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -393,7 +467,7 @@
             visibility: hidden;
             z-index: 10010;
             background: white;
-            color: var(--brand-pink);
+            color: black;
             font-family: 'Russo One', sans-serif;
             overflow: hidden;
             text-align: left; /* Ensure clone is left-aligned */
@@ -489,9 +563,9 @@
         <a href="#">GENTLEMENS CLUBS</a>
         <div style="margin-top: 20px;">
             <a href="#" style="font-size: 22px; font-weight: 400;">About Us</a>
-            <span style="color: var(--brand-pink); font-size: 22px; padding: 0 10px;">|</span>
+            <span style="background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 22px; padding: 0 10px;">|</span>
             <a href="#" style="font-size: 22px; font-weight: 400;">Contact</a>
-            <span style="color: var(--brand-pink); font-size: 22px; padding: 0 10px;">|</span>
+            <span style="background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 22px; padding: 0 10px;">|</span>
             <a href="#" style="font-size: 22px; font-weight: 400;">Photos</a>
         </div>
     </nav>
@@ -544,9 +618,7 @@
                 newPillLoaderFill.style.width = p + '%';
                 newPercentageCounter.textContent = p + '%';
 
-                if (p === 100) {
-                    newPillLoaderContainer.style.borderColor = 'var(--brand-pink)';
-                }
+
             }, intervalTime);
 
             setTimeout(() => {
@@ -591,12 +663,21 @@
                 partybus: [ { name: 'Party Bus 1' }, { name: 'Party Bus 2' } ]
             };
             
+            const whiteSlideOverlay = document.getElementById('white-slide-overlay');
+            
             menuItems.forEach(item => {
                 item.addEventListener('click', () => {
                     if (originalCard) return; // Don't allow menu change if card is open
                     menuItems.forEach(i => i.classList.remove('glass-item--active'));
                     item.classList.add('glass-item--active');
-                    showCardsForCategory(item.dataset.category);
+                    const category = item.dataset.category;
+                    showCardsForCategory(category);
+
+                    if (category === 'home') {
+                        whiteSlideOverlay.classList.remove('dimmed');
+                    } else {
+                        whiteSlideOverlay.classList.add('dimmed');
+                    }
                 });
             });
 
@@ -623,7 +704,10 @@
                 items.forEach(itemData => {
                     const card = document.createElement('div');
                     card.className = 'card';
-                    card.innerHTML = `<div>${itemData.name}</div>`; // Simple div for content
+                    if (itemData.name === 'Peppermint Hippo') {
+                        card.classList.add('peppermint-hippo-card');
+                    }
+                    card.innerHTML = `<div class="card-text">${itemData.name}</div>`;
                     cardGridContainer.appendChild(card);
                 });
                 cardGridContainer.classList.add('visible');
@@ -632,13 +716,25 @@
             function zoomIn(card) {
                 originalCard = card;
                 const cardRect = card.getBoundingClientRect();
-                
-                animationClone.innerHTML = `
-                    <div class="card-title">${card.textContent}</div>
-                    <div class="card-content">
-                        <p>Details about ${card.textContent} will go here.</p>
-                    </div>
-                `;
+
+                if (card.classList.contains('peppermint-hippo-card')) {
+                    animationClone.classList.add('peppermint-hippo-expanded');
+                    animationClone.innerHTML = `
+                        <div class="card-title">${card.textContent}</div>
+                        <div class="card-content">
+                            <p>Details about ${card.textContent} will go here.</p>
+                            <div style="height: 1000px;"></div>
+                            <footer class="hippo-footer">Peppermint hippo</footer>
+                        </div>
+                    `;
+                } else {
+                    animationClone.innerHTML = `
+                        <div class="card-title">${card.textContent}</div>
+                        <div class="card-content">
+                            <p>Details about ${card.textContent} will go here.</p>
+                        </div>
+                    `;
+                }
                 
                 gsap.set(animationClone, {
                     left: cardRect.left,
@@ -699,6 +795,8 @@
                         originalCard.style.opacity = 1;
                         originalCard = null;
                         document.body.classList.remove('card-zoomed');
+                        animationClone.classList.remove('peppermint-hippo-expanded');
+                        gsap.set('#animation-clone .card-title', { opacity: 1 }); // Reset title opacity
                     }
                 });
                 
