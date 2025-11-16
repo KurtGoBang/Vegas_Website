@@ -382,6 +382,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s, visibility 0.5s;
+            grid-auto-rows: 72.5px;
         }
 
         #card-grid-container.visible {
@@ -395,7 +396,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
             cursor: pointer;
             font-family: 'Russo One', sans-serif;
-            min-height: 100px;
+            position: relative; /* Added for positioning context */
             display: flex;
             align-items: center;
             justify-content: flex-start; /* Left-justify content */
@@ -405,12 +406,34 @@
             border: 2px solid #eee; /* Add a light grey border */
         }
 
+        .card--large {
+            grid-row-end: span 2;
+        }
+
+        .bottom-left-banner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%); /* App's gradient */
+            color: white;
+            padding: 3px 8px; /* Smaller padding */
+            font-size: 0.65em; /* Smaller font size */
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom-left-radius: 16px; /* Match card's corner */
+            border-top-right-radius: 5px; /* Small radius for the other corner */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+            z-index: 1;
+            white-space: nowrap; /* Prevent text from wrapping */
+        }
+
         .card-text {
             color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
         .peppermint-hippo-card {
-            background-image: url('Images/Hippo-Inside.jpg');
+            background-image: url('Images/strip-clubs/Hippo-Inside.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -419,26 +442,30 @@
             color: white;
         }
 
-        #animation-clone.peppermint-hippo-expanded {
+        .strip-club-card-with-image .card-text {
+            color: white;
+        }
+
+        #animation-clone.expanded-card-has-image {
             background: black;
             padding-top: 40vh;
         }
 
-        #animation-clone.peppermint-hippo-expanded::before {
+        #animation-clone.expanded-card-has-image::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 40vh;
-            background-image: url('Images/Hippo-Inside.jpg');
+            background-image: var(--expanded-card-image);
             background-size: cover;
             background-position: center;
             -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
             mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
         }
 
-        #animation-clone.peppermint-hippo-expanded .card-title {
+        #animation-clone.expanded-card-has-image .card-title {
             position: absolute;
             top: -20px;
             left: -10px;
@@ -663,6 +690,15 @@
             
             let originalCard = null; // To store the card that was clicked
 
+            const stripClubImageMap = {
+                'Peppermint Hippo': 'Hippo-Inside.jpg',
+                'Treasures': 'Treasures-inside.jpeg',
+                'Sapphire': 'sapphire-inside.jpeg',
+                'Spearmint Rhino': 'spearmint-rhino-inside.jpg',
+                'Hustler Club': 'Hustlerclub-inside.jpeg',
+                'Crazy Horse 3': 'CrazyHorse-inside.jpeg'
+            };
+
             const cardData = {
                 home: [],
                 nightclubs: [ { name: 'Omnia' }, { name: 'Zouk' }, { name: 'Hakkasan' } ],
@@ -708,13 +744,27 @@
                     cardGridContainer.classList.remove('visible');
                     return;
                 }
-                items.forEach(itemData => {
+                items.forEach((itemData, index) => {
                     const card = document.createElement('div');
                     card.className = 'card';
-                    if (itemData.name === 'Peppermint Hippo') {
-                        card.classList.add('peppermint-hippo-card');
+                    if (index === 0) {
+                        card.classList.add('card--large');
                     }
+                    
+                    if (category === 'stripclubs') {
+                        const imageName = stripClubImageMap[itemData.name];
+                        if (imageName) {
+                            card.style.backgroundImage = `url('Images/strip-clubs/${imageName}')`;
+                            card.style.backgroundSize = 'cover';
+                            card.style.backgroundPosition = 'center';
+                            card.classList.add('strip-club-card-with-image'); // Add a class for styling text color
+                        }
+                    }
+                    
                     card.innerHTML = `<div class="card-text">${itemData.name}</div>`;
+                    if (index === 0) {
+                        card.innerHTML += `<div class="bottom-left-banner">TOP RECOMMENDED SPOT</div>`;
+                    }
                     cardGridContainer.appendChild(card);
                 });
                 cardGridContainer.classList.add('visible');
@@ -736,21 +786,28 @@
                 originalCard.style.opacity = 0;
                 document.body.classList.add('card-zoomed');
 
-                if (card.classList.contains('peppermint-hippo-card')) {
-                    animationClone.classList.add('peppermint-hippo-expanded');
+                const clubName = card.querySelector('.card-text').textContent;
+                const backgroundImage = card.style.backgroundImage;
+                const hasBackgroundImage = backgroundImage && backgroundImage !== 'none';
+
+                if (hasBackgroundImage) {
+                    animationClone.classList.add('expanded-card-has-image');
+                    animationClone.style.setProperty('--expanded-card-image', backgroundImage);
                     animationClone.innerHTML = `
-                        <div class="card-title">${card.textContent}</div>
+                        <div class="card-title">${clubName}</div>
                         <div class="card-content">
-                            <p>Details about ${card.textContent} will go here.</p>
+                            <p>Details about ${clubName} will go here.</p>
                             <div style="height: 3000px;"></div>
                             <footer class="hippo-footer">Peppermint hippo</footer>
                         </div>
                     `;
                 } else {
+                    animationClone.classList.remove('expanded-card-has-image');
+                    animationClone.style.removeProperty('--expanded-card-image');
                     animationClone.innerHTML = `
-                        <div class="card-title">${card.textContent}</div>
+                        <div class="card-title">${clubName}</div>
                         <div class="card-content">
-                            <p>Details about ${card.textContent} will go here.</p>
+                            <p>Details about ${clubName} will go here.</p>
                         </div>
                     `;
                 }
@@ -818,7 +875,7 @@
                         originalCard.style.opacity = 1;
                         originalCard = null;
                         document.body.classList.remove('card-zoomed');
-                        animationClone.classList.remove('peppermint-hippo-expanded');
+                        animationClone.classList.remove('expanded-card-has-image');
                         gsap.set('#animation-clone .card-title', { opacity: 1 }); // Reset title opacity
                     }
                 });
