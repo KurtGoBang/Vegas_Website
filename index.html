@@ -465,6 +465,29 @@
             mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
         }
 
+        .recommended-spot-section {
+            text-align: center;
+            padding-top: 20px;
+            color: white;
+            margin-top: -50px; /* Move section up by 50px */
+        }
+
+        .recommended-spot-text {
+            font-size: 1.35rem; /* A little bigger font size */
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: 'Russo One', sans-serif; /* Brand font */
+            background: linear-gradient(90deg, #FF0EBE 0%, #8A00FF 100%); /* Brand gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .recommended-spot-subtext {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
         #animation-clone.expanded-card-has-image .card-title {
             position: absolute;
             top: -20px;
@@ -690,6 +713,15 @@
             
             let originalCard = null; // To store the card that was clicked
 
+            const getCategoryDisplayName = (category) => {
+                switch (category) {
+                    case 'nightclubs': return 'Nightclub';
+                    case 'stripclubs': return 'Strip Club';
+                    case 'partybus': return 'Party Bus';
+                    default: return '';
+                }
+            };
+
             const stripClubImageMap = {
                 'Peppermint Hippo': 'Hippo-Inside.jpg',
                 'Treasures': 'Treasures-inside.jpeg',
@@ -747,6 +779,7 @@
                 items.forEach((itemData, index) => {
                     const card = document.createElement('div');
                     card.className = 'card';
+                    card.dataset.category = category; // Add data-category attribute
                     if (index === 0) {
                         card.classList.add('card--large');
                     }
@@ -789,6 +822,21 @@
                 const clubName = card.querySelector('.card-text').textContent;
                 const backgroundImage = card.style.backgroundImage;
                 const hasBackgroundImage = backgroundImage && backgroundImage !== 'none';
+                const category = card.dataset.category; // Retrieve category
+                const categoryDisplayName = getCategoryDisplayName(category); // Get display name
+
+                let cardContentHtml = `
+                    <p>Details about ${clubName} will go here.</p>
+                `;
+
+                if (originalCard.classList.contains('card--large')) {
+                    cardContentHtml = `
+                        <div class="recommended-spot-section">
+                            <div class="recommended-spot-text">★ TOP RECOMMENDED SPOT ★</div>
+                            <div class="recommended-spot-subtext">Most Requested ${categoryDisplayName}</div>
+                        </div>
+                    `;
+                }
 
                 if (hasBackgroundImage) {
                     animationClone.classList.add('expanded-card-has-image');
@@ -796,7 +844,7 @@
                     animationClone.innerHTML = `
                         <div class="card-title">${clubName}</div>
                         <div class="card-content">
-                            <p>Details about ${clubName} will go here.</p>
+                            ${cardContentHtml}
                             <div style="height: 3000px;"></div>
                             <footer class="hippo-footer">Peppermint hippo</footer>
                         </div>
@@ -807,7 +855,7 @@
                     animationClone.innerHTML = `
                         <div class="card-title">${clubName}</div>
                         <div class="card-content">
-                            <p>Details about ${clubName} will go here.</p>
+                            ${cardContentHtml}
                         </div>
                     `;
                 }
