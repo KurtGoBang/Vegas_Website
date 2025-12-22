@@ -812,6 +812,229 @@
             opacity: 0.9;
         }
 
+        /* --- Hippo Hotties Layout --- */
+        .pickup-section {
+            width: calc(100% + 60px); /* Break out of parent padding */
+            margin-left: -30px; 
+            margin-top: 60px;
+            margin-bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px; /* 20px padding from screen edges */
+            box-sizing: border-box;
+        }
+
+        .pickup-header-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 10px 0;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+        .pickup-header {
+            margin: 0;
+            font-family: 'Russo One', sans-serif;
+            font-size: 6vw; /* Match others */
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .call-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 0;
+            width: 100%; /* Full width of parent which has 20px padding */
+            border-radius: 50px;
+            background: linear-gradient(90deg, #00C853 0%, #B2FF59 100%);
+            color: white;
+            text-decoration: none;
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0, 200, 83, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .call-btn:active {
+            transform: scale(0.95);
+        }
+
+        .call-btn-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Pulse animation for the button */
+        .call-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+
+        /* --- Hippo Hotties Layout --- */
+        .hippo-hotties-section {
+            display: flex;
+            flex-direction: column; /* Changed to column to stack top row and carousel */
+            width: 100%;
+            margin-top: 40px; 
+            padding-bottom: 50px;
+            position: relative;
+        }
+
+        .hippo-top-row {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: stretch; /* Ensure sidebar matches grid height */
+        }
+
+        .hippo-sidebar {
+            width: 50px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
+            margin-left: -38px;
+            /* Ensure it stretches and aligns children to top */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+        }
+
+        .hippo-sticky-wrapper {
+            position: sticky;
+            top: 20px;
+            display: block; 
+            margin-bottom: auto;
+        }
+
+        .hippo-vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            font-family: 'Russo One', sans-serif;
+            font-size: 6vh; 
+            background: linear-gradient(180deg, #FF0EBE 0%, #8A00FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            -webkit-text-stroke: 1px white;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-align: center;
+            height: auto;
+            max-height: calc(100vh - 40px);
+        }
+
+        .hippo-content-col {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            min-width: 0; 
+            padding-right: 10px; 
+            padding-left: 0;
+        }
+
+        /* Update grid container to just be the grid, no extra layout duties */
+        .hippo-grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .hippo-grid-item {
+            aspect-ratio: 1/1.2; /* Taller/Larger boxes */
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Russo One', sans-serif;
+            color: rgba(255,255,255,0.2);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hippo-grid-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* --- Single Large Photo --- */
+        .large-photo-container {
+            width: 100%;
+            aspect-ratio: 16/6.5; /* Made taller from 16/4.5 */
+            background: linear-gradient(45deg, #111, #333);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Russo One', sans-serif;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .large-photo-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
         /* --- Animation Clone Styles --- */
         #animation-clone {
             position: fixed;
@@ -1139,82 +1362,117 @@
                 const checkMarkSvg = `<svg class="check-mark-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`;
 
                 if (category === 'stripclubs') {
-                    let headerHtml = `<h2 class="ttk-header">Things To Know</h2>`;
-                    let onlinePackagesHtml = '';
+                    const hottiesText = `${clubName.toUpperCase()} HOTTIES`;
                     
-                    // Apply grounded header only to Peppermint Hippo for now
-                    if (clubName.trim() === 'Peppermint Hippo') {
-                        headerHtml = `
-                            <div class="ttk-header-wrapper">
-                                <div class="ttk-header-box grounded-header">
-                                    <h2 class="ttk-header">Things To Know</h2>
-                                </div>
+                    const headerHtml = `
+                        <div class="ttk-header-wrapper">
+                            <div class="ttk-header-box grounded-header">
+                                <h2 class="ttk-header">Things To Know</h2>
                             </div>
-                        `;
+                        </div>
+                    `;
 
-                        onlinePackagesHtml = `
-                            <div class="online-packages-container">
-                                <div class="online-packages-header-box">
-                                    <h2 class="online-packages-header">Online Packages</h2>
-                                </div>
-                                
-                                <div class="package-carousel-viewport" id="package-carousel">
-                                    <div class="package-track">
-                                        <!-- Card 1 -->
-                                        <div class="package-card">
-                                            <div class="package-image-placeholder">IMG 01</div>
-                                            <div class="package-details">
-                                                <h3 class="package-title">VIP Entry</h3>
-                                                <div class="package-price">$50.00</div>
-                                                <p class="package-desc">Skip the line and get straight to the party. Includes 1 free drink.</p>
-                                                <button class="package-btn">Book Now</button>
-                                            </div>
+                    const onlinePackagesHtml = `
+                        <div class="online-packages-container">
+                            <div class="online-packages-header-box">
+                                <h2 class="online-packages-header">Online Packages</h2>
+                            </div>
+                            
+                            <div class="package-carousel-viewport" id="package-carousel">
+                                <div class="package-track">
+                                    <!-- Card 1 -->
+                                    <div class="package-card">
+                                        <div class="package-image-placeholder">IMG 01</div>
+                                        <div class="package-details">
+                                            <h3 class="package-title">VIP Entry</h3>
+                                            <div class="package-price">$50.00</div>
+                                            <p class="package-desc">Skip the line and get straight to the party. Includes 1 free drink.</p>
+                                            <button class="package-btn">Book Now</button>
                                         </div>
-                                        <!-- Card 2 -->
-                                        <div class="package-card">
-                                            <div class="package-image-placeholder">IMG 02</div>
-                                            <div class="package-details">
-                                                <h3 class="package-title">Table Service</h3>
-                                                <div class="package-price">$300.00</div>
-                                                <p class="package-desc">Private table for up to 4 guests. Includes 1 bottle of premium vodka.</p>
-                                                <button class="package-btn">Book Now</button>
-                                            </div>
+                                    </div>
+                                    <!-- Card 2 -->
+                                    <div class="package-card">
+                                        <div class="package-image-placeholder">IMG 02</div>
+                                        <div class="package-details">
+                                            <h3 class="package-title">Table Service</h3>
+                                            <div class="package-price">$300.00</div>
+                                            <p class="package-desc">Private table for up to 4 guests. Includes 1 bottle of premium vodka.</p>
+                                            <button class="package-btn">Book Now</button>
                                         </div>
-                                        <!-- Card 3 -->
-                                        <div class="package-card">
-                                            <div class="package-image-placeholder">IMG 03</div>
-                                            <div class="package-details">
-                                                <h3 class="package-title">Bachelor Party</h3>
-                                                <div class="package-price">$500.00</div>
-                                                <p class="package-desc">The ultimate guys' night out. 2 bottles, private host, and shoutout.</p>
-                                                <button class="package-btn">Book Now</button>
-                                            </div>
+                                    </div>
+                                    <!-- Card 3 -->
+                                    <div class="package-card">
+                                        <div class="package-image-placeholder">IMG 03</div>
+                                        <div class="package-details">
+                                            <h3 class="package-title">Bachelor Party</h3>
+                                            <div class="package-price">$500.00</div>
+                                            <p class="package-desc">The ultimate guys' night out. 2 bottles, private host, and shoutout.</p>
+                                            <button class="package-btn">Book Now</button>
                                         </div>
-                                        <!-- Card 4 -->
-                                        <div class="package-card">
-                                            <div class="package-image-placeholder">IMG 04</div>
-                                            <div class="package-details">
-                                                <h3 class="package-title">Couple's Night</h3>
-                                                <div class="package-price">$150.00</div>
-                                                <p class="package-desc">Romantic booth seating with champagne service and chocolate strawberries.</p>
-                                                <button class="package-btn">Book Now</button>
-                                            </div>
+                                    </div>
+                                    <!-- Card 4 -->
+                                    <div class="package-card">
+                                        <div class="package-image-placeholder">IMG 04</div>
+                                        <div class="package-details">
+                                            <h3 class="package-title">Couple's Night</h3>
+                                            <div class="package-price">$150.00</div>
+                                            <p class="package-desc">Romantic booth seating with champagne service and chocolate strawberries.</p>
+                                            <button class="package-btn">Book Now</button>
                                         </div>
-                                        <!-- Card 5 -->
-                                        <div class="package-card">
-                                            <div class="package-image-placeholder">IMG 05</div>
-                                            <div class="package-details">
-                                                <h3 class="package-title">Baller Status</h3>
-                                                <div class="package-price">$2,500.00</div>
-                                                <p class="package-desc">Center stage table, 5 bottles, fireworks presentation, and private security.</p>
-                                                <button class="package-btn">Book Now</button>
-                                            </div>
+                                    </div>
+                                    <!-- Card 5 -->
+                                    <div class="package-card">
+                                        <div class="package-image-placeholder">IMG 05</div>
+                                        <div class="package-details">
+                                            <h3 class="package-title">Baller Status</h3>
+                                            <div class="package-price">$2,500.00</div>
+                                            <p class="package-desc">Center stage table, 5 bottles, fireworks presentation, and private security.</p>
+                                            <button class="package-btn">Book Now</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        `;
-                    }
+                        </div>
+
+                        <div class="pickup-section">
+                            <div class="pickup-header-box">
+                                <h2 class="pickup-header">Immediate Pickup</h2>
+                            </div>
+                            <a href="tel:7025550123" class="call-btn">
+                                <svg class="call-btn-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                Call Now
+                            </a>
+                        </div>
+
+                        <div class="hippo-hotties-section">
+                            <div class="hippo-top-row">
+                                <div class="hippo-sidebar">
+                                    <div class="hippo-sticky-wrapper">
+                                        <div class="hippo-vertical-text">${hottiesText}</div>
+                                    </div>
+                                </div>
+                                <div class="hippo-content-col">
+                                    <div class="hippo-grid-container">
+                                        <div class="hippo-grid-item">IMG 01</div>
+                                        <div class="hippo-grid-item">IMG 02</div>
+                                        <div class="hippo-grid-item">IMG 03</div>
+                                        <div class="hippo-grid-item">IMG 04</div>
+                                        <div class="hippo-grid-item">IMG 05</div>
+                                        <div class="hippo-grid-item">IMG 06</div>
+                                        <div class="hippo-grid-item">IMG 07</div>
+                                        <div class="hippo-grid-item">IMG 08</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Single Large Photo (Outside top row) -->
+                            <div style="padding-left: 10px; margin-top: 40px;"> 
+                                <div class="large-photo-container">
+                                    LARGE IMG
+                                </div>
+                            </div>
+                        </div>
+                    `;
 
                     cardContentHtml = `
                         ${svgGradientDef}
@@ -1355,6 +1613,7 @@
                             </div>
                         </div>
                         ${onlinePackagesHtml}
+                        <div style="height: 150px;"></div> <!-- Unified 150px dead space -->
                     `;
                 }
 
@@ -1365,8 +1624,8 @@
                         <div class="card-title">${clubName}</div>
                         <div class="card-content">
                             ${cardContentHtml}
-                            <div style="height: 3000px;"></div>
-                            <footer class="hippo-footer">Peppermint hippo</footer>
+                            <footer class="hippo-footer">${clubName}</footer>
+                            <div style="height: 50px;"></div> <!-- Final buffer -->
                         </div>
                     `;
                 } else {
@@ -1394,9 +1653,9 @@
                         scrollTween = ScrollTrigger.create({
                             trigger: "#animation-clone",
                             scroller: "#animation-clone",
-                            start: "75%",
-                            end: "100%",
-                            scrub: true,
+                            start: "85%+=600px",
+                            end: "85%+=1400px", 
+                            scrub: 1, 
                             animation: gsap.to("#animation-clone", { 
                                 backgroundColor: "white",
                                 color: "black",
@@ -1405,7 +1664,7 @@
                         });
 
                         // Initialize Carousel if present
-                        if (clubName.trim() === 'Peppermint Hippo') {
+                        if (category === 'stripclubs') {
                             initInfiniteCarousel();
                         }
                     }
@@ -1427,6 +1686,8 @@
                 if (!originalCard) return;
                 const cardRect = originalCard.getBoundingClientRect();
 
+                // Reset scroll position immediately
+                animationClone.scrollTop = 0; 
                 gsap.set(animationClone, { overflowY: 'hidden' });
 
                 gsap.to('#animation-clone .card-content', {
